@@ -97,14 +97,14 @@ def users_sign_out():
 # User's personal homebrew classes
 @app.route('/personal_homebrew', methods=['GET', 'POST'])
 def personal_homebrew():
-    return render_template('personal_homebrew.html')
+    return render_template('personal_homebrew.html',user=current_user)
 
 # All homebrew classes
 @app.route('/community_homebrew', methods=['GET', 'POST'])
 def community_homebrew():
-    return render_template('community_homebrew.html')
+    return render_template('community_homebrew.html',user=current_user)
 
 # User's own profile page
 @app.route('/my_profile', methods=['GET', 'POST'])
 def my_profile():
-    return render_template('my_profile.html')
+    return render_template('my_profile.html',user=current_user)
