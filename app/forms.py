@@ -19,6 +19,7 @@ class SignUpForm(FlaskForm):
     passwd_confirm = PasswordField('Confirm Password', validators=[DataRequired()])
     submit = SubmitField('Confirm')
 
+
 class SignInForm(FlaskForm):
     id = StringField('Id', validators=[DataRequired()])
     passwd = PasswordField('Password', validators=[DataRequired()])

@@ -8,8 +8,8 @@ Description: Project 03 - DnD Class Website - Team "Squirt"
 from app import app, db, load_user
 from app.models import User
 from app.forms import SignUpForm, SignInForm
-from flask import render_template, redirect, url_for, request, redirect
-from flask_login import login_required, login_user, logout_user, current_user
+from flask import render_template, url_for, redirect
+from flask_login import login_user, logout_user, current_user
 import bcrypt
 from datetime import date
 
@@ -18,7 +18,7 @@ from datetime import date
 @app.route('/index')
 @app.route('/index.html')
 def index():
-    return render_template('index.html',user=current_user)
+    return render_template('index.html', user=current_user)
 
 
 ###########################################################################################################
@@ -49,7 +49,7 @@ def users_sign_in():
         else:
             return '<p>Username not recognized!</p>'
     else:
-        return render_template('users_sign_in.html', title=app.config['USER SIGNIN'], form=form,user=current_user)
+        return render_template('../templates/users_sign_in.html', title=app.config['USER SIGNIN'], form=form, user=current_user)
 
 
 # sign-up functionality
@@ -77,7 +77,7 @@ def users_sign_up():
 
         return redirect(url_for('index'))
     else:
-        return render_template('users_sign_up.html', title=app.config['USER SIGNUP'], form=form,user=current_user)
+        return render_template('../templates/users_sign_up.html', title=app.config['USER SIGNUP'], form=form, user=current_user)
 
 
 # sign-out functionality
@@ -97,14 +97,14 @@ def users_sign_out():
 # User's personal homebrew classes
 @app.route('/personal_homebrew', methods=['GET', 'POST'])
 def personal_homebrew():
-    return render_template('personal_homebrew.html',user=current_user)
+    return render_template('../templates/personal_homebrew.html', user=current_user)
 
 # All homebrew classes
 @app.route('/community_homebrew', methods=['GET', 'POST'])
 def community_homebrew():
-    return render_template('community_homebrew.html',user=current_user)
+    return render_template('../templates/community_homebrew.html', user=current_user)
 
 # User's own profile page
 @app.route('/my_profile', methods=['GET', 'POST'])
 def my_profile():
-    return render_template('my_profile.html',user=current_user)
+    return render_template('../templates/my_profile.html', user=current_user)
