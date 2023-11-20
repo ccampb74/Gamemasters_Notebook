@@ -5,7 +5,6 @@
         <h1 class="header-text">Sign Up</h1>
         <form action="" method="POST" novalidate>
             {{ form.hidden_tag() }}
-            <p>{{ form.id.label }} <br> {{ form.id(size=15) }}</p>
             <p>{{ form.email.label }} <br> {{ form.email(size=30) }}</p>
             <p>{{ form.username.label }} <br> {{ form.username(size=30) }}</p>
             <p>{{ form.passwd.label }} <br> {{ form.passwd(size=30) }}</p>

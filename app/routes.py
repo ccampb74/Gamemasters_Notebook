@@ -49,7 +49,7 @@ def users_sign_in():
         else:
             return '<p>Username not recognized!</p>'
     else:
-        return render_template('../templates/users_sign_in.html', title=app.config['USER SIGNIN'], form=form, user=current_user)
+        return render_template('users_sign_in.html', title=app.config['USER SIGNIN'], form=form, user=current_user)
 
 
 # sign-up functionality
@@ -65,19 +65,17 @@ def users_sign_up():
             return '<p>Passwords do not match!</p>'
 
         new_user = User(
-            id=form.id.data,
             email=form.email.data,
             username=form.username.data,
-            vote=0,
             creation_date=str(date.today()),
-            passwd=hashed
+            password=hashed
         )
         db.session.add(new_user)
         db.session.commit()
 
         return redirect(url_for('index'))
     else:
-        return render_template('../templates/users_sign_up.html', title=app.config['USER SIGNUP'], form=form, user=current_user)
+        return render_template('users_sign_up.html', title=app.config['USER SIGNUP'], form=form, user=current_user)
 
 
 # sign-out functionality
@@ -87,8 +85,7 @@ def users_sign_out():
     return redirect(url_for('index'))
 
 
-
-# End of sign in/ sign-up/ sign out 
+# End of sign in/ sign-up/ sign out
 ###########################################################################################################
 
 ###########################################################################################################
@@ -97,14 +94,16 @@ def users_sign_out():
 # User's personal homebrew classes
 @app.route('/personal_homebrew', methods=['GET', 'POST'])
 def personal_homebrew():
-    return render_template('../templates/personal_homebrew.html', user=current_user)
+    return render_template('personal_homebrew.html', user=current_user)
+
 
 # All homebrew classes
 @app.route('/community_homebrew', methods=['GET', 'POST'])
 def community_homebrew():
-    return render_template('../templates/community_homebrew.html', user=current_user)
+    return render_template('community_homebrew.html', user=current_user)
+
 
 # User's own profile page
 @app.route('/my_profile', methods=['GET', 'POST'])
 def my_profile():
-    return render_template('../templates/my_profile.html', user=current_user)
+    return render_template('my_profile.html', user=current_user)
