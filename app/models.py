@@ -4,31 +4,38 @@ Instructor: Thyago Mota
 Student(s): Callie Campbell-Perdomo, Colin Morrison, Kareena Kunwar, Saul Gonzalez, Vincent Dufour
 Description: Project 03 - DnD Class Website - Team "Squirt"
 '''
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import relationship
+from typing import List
 
+from sqlalchemy import ForeignKey
+from sqlalchemy import Integer, String
+from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import relationship
 from app import db
 from flask_login import UserMixin
 
-
 # this will need to be edited to reflect Callie's UML Class Diagram
-class User(db.Model, UserMixin):
-    __tablename__ = 'users'
-    id = db.Column(db.String, primary_key=True)
-    email = db.Column(db.String)
-    username = db.Column(db.String)
-    vote = db.Column(db.Integer)
-    creation_date = db.Column(db.String)
-    # custom_classess = db.relationship("Dndclass")
-    passwd = db.Column(db.LargeBinary)
+# class User(db.Model, UserMixin):
+#     __tablename__ = 'users'
+#     id = db.Column(db.String, primary_key=True)
+#     email = db.Column(db.String)
+#     username = db.Column(db.String)
+#     vote = db.Column(db.Integer)
+#     creation_date = db.Column(db.String)
+#     # custom_classess = db.relationship("Dndclass")
+#     passwd = db.Column(db.LargeBinary)
 
 
 class Campaign(db.Model, UserMixin):
     __tablename__ = 'campaigns_table'
-    id: Mapped[int] = mapped_column(primary_key=True)
-    name = db.Column(db.String)
-    game_master: Mapped["User"] = relationship(back_populates="parent")
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    name: Mapped[str] = mapped_column(String, unique=True, nullable=False)
+    story: Mapped[str] = mapped_column(String)
+    # characters: Mapped[str] = mapped_column()
+    # sessions: Mapped[str] = mapped_column()
+    # private_notes: Mapped[str] = mapped_column()
+
+
+
 """
 User:
     id: String
@@ -67,7 +74,6 @@ Private Notes:
     note: String
     campaign: relationship
     """
-
 
 # class Dndclass(db.Model):
 #     __tablename__ = 'dndclass'
