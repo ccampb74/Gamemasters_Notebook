@@ -7,7 +7,7 @@ import pytest
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
-from app.models import User
+from app.models import Users
 
 
 @pytest.fixture()

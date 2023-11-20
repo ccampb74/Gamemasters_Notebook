@@ -6,7 +6,7 @@ Description: Project 03 - DnD Class Website - Team "Squirt"
 '''
 
 from app import app, db, load_user
-from app.models import User
+from app.models import Users
 from app.forms import SignUpForm, SignInForm
 from flask import render_template, url_for, redirect
 from flask_login import login_user, logout_user, current_user
@@ -64,7 +64,7 @@ def users_sign_up():
         else:
             return '<p>Passwords do not match!</p>'
 
-        new_user = User(
+        new_user = Users(
             email=form.email.data,
             username=form.username.data,
             creation_date=str(date.today()),

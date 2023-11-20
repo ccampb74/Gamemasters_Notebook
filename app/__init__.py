@@ -37,7 +37,7 @@ login_manager.init_app(app)
 @login_manager.user_loader
 def load_user(id):
     try:
-        return db.session.query(User).filter(User.id == id).one()
+        return db.session.query(Users).filter(Users.id == id).one()
     except:
         return None
 
