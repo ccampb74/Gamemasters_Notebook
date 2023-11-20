@@ -29,8 +29,8 @@
             </ul>
             
             <span class="navbar-text">
-                {% if user.id|length %}
-                Hello {{user.id}}
+                {% if user.username|length %}
+                Hello {{user.username}}
                     <button type="button" class="modern-button" onclick=simple_action("{{ url_for('my_profile') }}")>My Profile</button>
                     <button type="button" class="modern-button" onclick=simple_action("{{ url_for('users_sign_out') }}")>Sign Out</button>
                 {% else %}

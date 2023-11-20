@@ -37,7 +37,7 @@ def users_sign_in():
         user = load_user(id)
 
         if user:
-            if bcrypt.checkpw(hashed_passwd, user.passwd):
+            if bcrypt.checkpw(hashed_passwd, user.password):
                 login_user(user)
             else:
                 return '<p>Incorrect Password!</p>'
@@ -65,6 +65,7 @@ def users_sign_up():
             return '<p>Passwords do not match!</p>'
 
         new_user = Users(
+            id=form.id.data,
             email=form.email.data,
             username=form.username.data,
             creation_date=str(date.today()),

@@ -6,20 +6,15 @@ Description: Project 03 - DnD Class Website - Team "Squirt"
 '''
 
 from flask_login import UserMixin
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import String, LargeBinary
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import relationship
-
+from sqlalchemy import ForeignKey, Integer, String, LargeBinary
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app import db
 
 
 # user is the root class
 class Users(db.Model, UserMixin):
     __tablename__ = 'user_table'
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id: Mapped[str] = mapped_column(String, primary_key=True)
     username: Mapped[str] = mapped_column(String, unique=True, nullable=False)
     email: Mapped[str] = mapped_column(String, nullable=False)
     password: Mapped[bytes] = mapped_column(LargeBinary, nullable=False)
