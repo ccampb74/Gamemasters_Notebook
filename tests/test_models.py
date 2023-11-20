@@ -34,7 +34,7 @@ def client(app):
 def runner(app):
     return app.test_cli_runner()
 
-
+# test the end points, this is just an example of how to do it down below.
 # def test_given_a_valid_user_successfully_in_db():
 #     db = SQLAlchemy()
 #     password = "hi"
