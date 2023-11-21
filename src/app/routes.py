@@ -92,15 +92,26 @@ def users_sign_out():
 ###########################################################################################################
 # Start of helper functions
 
-
-# Ffunction that converts string of comma separated values to a Python list.
+# Function that converts string of comma separated values to a Python list.
 # users = csv_to_list(form.players.data)
 # ^ This is what it looks like to use this while pulling from form data. If nothing was entered, it'll return None
 def csv_to_list(input_users):
     if input_users == "":
         return None
     else:
-        users_list = input_users.split(",")
+        real_users = Users.query.all()          # queries all users
+        print(real_users)
+        users_list = input_users.split(",")     # splits csv into a Python list
+        length_of_list = len(users_list)        # finds length of list to iterate through in for loop
+
+        for real_user in real_users:            # separates user ids from user objects
+            real_user_id = real_user.id
+
+        for i in range(length_of_list):         # for each item in users_list, check if a user exists with that id
+            if users_list[i] != real_user_id:
+                print("This user ID: " + users_list[i] + " does not exist. Please try again.")
+                return None
+
         return users_list
     
 
