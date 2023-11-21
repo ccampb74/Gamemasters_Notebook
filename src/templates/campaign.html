@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% block main %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        /* Example styles - customize as needed */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+        }
+        .container {
+            width: 90%;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+        }
+        header {
+            background: #333;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        .main-content, .sidebar {
+            background: white;
+            padding: 20px;
+        }
+        .main-content {
+            flex: 3;
+        }
+        .sidebar {
+            flex: 1;
+            margin-left: 20px;
+        }
+        .sidebar ul {
+            list-style: none;
+        }
+        .sidebar li a {
+            display: block;
+            background-color: #e1e1e1;
+            padding: 10px;
+            margin-bottom: 10px;
+            color: black;
+            text-decoration: none;
+        }
+        .sidebar li a:hover {
+            background-color: #c9c9c9;
+        }
+        .sidebar button {
+            display: block;
+            width: 100%; /* Makes the button extend full width of the sidebar */
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #007BFF; /* Bootstrap primary color for example */
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            border: none;
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease; /* Smooth background color transition */
+        }
+        .sidebar button:hover {
+            background-color: #0056b3; /* Darker shade on hover */
+        }
+        section {
+            margin-bottom: 20px;
+        }
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 20px;
+            clear: both;
+        }
+        /* Add smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .main-content .campaign-h1 {
+      font-size: 48px; /* or any other size */
+      line-height: 1.2; /* Adjust line height for better readability */
+      font-weight: bold; /* Optional: if you want to make the font bolder */
+      margin-bottom: 10px; /* Space below the title */
+      /* Add other styles as needed */
+  }
+    </style>
+</head>
+<body>
+   
+    <div class="container">
+
+        <div class="main-content">
+            <section id="campaign">
+                <h1 class="campaign-h1">Campaign Name</h1>
+                <p>Rough and wild looking, a human stalks alone through the shadows of trees, hunting the orcs he knows are planning a raid on a nearby farm. Clutching a shortsword in each hand, he becomes a whirlwind of steel, cutting down one enemy after another.</p>
+                <p>After tumbling away from a cone of freezing air, an elf finds her feet and draws back her bow to loose an arrow at the white dragon. Shrugging off the wave of fear that emanates from the dragon like the cold of its breath, she sends one arrow after another to find the gaps between the dragon's thick scales.</p>
+                <p>Holding his hand high, a half-elf whistles to the hawk that circles high above him, calling the bird back to his side. Whispering instructions in Elvish, he points to the owlbear he's been tracking and sends the hawk to distract the creature while he readies his bow.</p>
+                <!-- More content goes here -->
+            </section>
+            <!-- More content sections here -->
+        </div>
+
+        <aside class="sidebar">
+            <!-- Sidebar navigation links -->
+            <ul>
+                <!-- Existing sidebar links -->
+            </ul>
+            <!-- Additional buttons for Characters and Sessions -->
+            <button onclick="location.href='characters.html'">Characters</button>
+            <button onclick="location.href='sessions.html'">Sessions</button>
+        </aside>
+    </div>
+
+
+{% endblock %}
