@@ -15,22 +15,22 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarText">
+
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-    
                 <li class="nav-item">
                     <a class="nav-link" href="#" onclick=simple_action("{{ url_for('index') }}")>Home</a>
                   </li>
               <li class="nav-item">
-                <a class="nav-link" href="#" onclick=simple_action("{{ url_for('personal_homebrew') }}")>My Homebrew Classes</a>
+                <a class="nav-link" href="#" onclick=simple_action("{{ url_for('index') }}")>Example Button 1</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#" onclick=simple_action("{{ url_for('community_homebrew') }}")>All Homebrew</a>
+                <a class="nav-link" href="#" onclick=simple_action("{{ url_for('index') }}")>Example Button 2</a>
               </li>
             </ul>
             
             <span class="navbar-text">
                 {% if user.username|length %}
-                Hello {{user.username}}
+                Hello {{user.username}}!
                     <button type="button" class="modern-button" onclick=simple_action("{{ url_for('my_profile') }}")>My Profile</button>
                     <button type="button" class="modern-button" onclick=simple_action("{{ url_for('users_sign_out') }}")>Sign Out</button>
                 {% else %}
@@ -40,7 +40,6 @@
                         Up</button>
                 {% endif %}
             </span>
-    
     
           </div>
         </div>

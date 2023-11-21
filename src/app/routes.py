@@ -90,18 +90,25 @@ def users_sign_out():
 ###########################################################################################################
 
 ###########################################################################################################
+# Start of helper functions
+
+
+# Ffunction that converts string of comma separated values to a Python list.
+# users = csv_to_list(form.players.data)
+# ^ This is what it looks like to use this while pulling from form data. If nothing was entered, it'll return None
+def csv_to_list(input_users):
+    if input_users == "":
+        return None
+    else:
+        users_list = input_users.split(",")
+        return users_list
+    
+
+# End of helper functions
+###########################################################################################################
+
+###########################################################################################################
 # Start of user-facing routes
-
-# User's personal homebrew classes
-@app.route('/personal_homebrew', methods=['GET', 'POST'])
-def personal_homebrew():
-    return render_template('personal_homebrew.html', user=current_user)
-
-
-# All homebrew classes
-@app.route('/community_homebrew', methods=['GET', 'POST'])
-def community_homebrew():
-    return render_template('community_homebrew.html', user=current_user)
 
 
 # User's own profile page
