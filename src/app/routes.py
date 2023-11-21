@@ -6,10 +6,10 @@ Description: Project 03 - DnD Class Website - Team "Squirt"
 '''
 
 from app import app, db, load_user
-from app.models import User
+from app.models import Users
 from app.forms import SignUpForm, SignInForm
-from flask import render_template, redirect, url_for, request, redirect
-from flask_login import login_required, login_user, logout_user, current_user
+from flask import render_template, url_for, redirect
+from flask_login import login_user, logout_user, current_user
 import bcrypt
 from datetime import date
 
@@ -18,7 +18,7 @@ from datetime import date
 @app.route('/index')
 @app.route('/index.html')
 def index():
-    return render_template('index.html',user=current_user)
+    return render_template('index.html', user=current_user)
 
 
 ###########################################################################################################
@@ -37,7 +37,7 @@ def users_sign_in():
         user = load_user(id)
 
         if user:
-            if bcrypt.checkpw(hashed_passwd, user.passwd):
+            if bcrypt.checkpw(hashed_passwd, user.password):
                 login_user(user)
             else:
                 return '<p>Incorrect Password!</p>'
@@ -49,7 +49,7 @@ def users_sign_in():
         else:
             return '<p>Username not recognized!</p>'
     else:
-        return render_template('users_sign_in.html', title=app.config['USER SIGNIN'], form=form,user=current_user)
+        return render_template('users_sign_in.html', title=app.config['USER SIGNIN'], form=form, user=current_user)
 
 
 # sign-up functionality
@@ -64,20 +64,19 @@ def users_sign_up():
         else:
             return '<p>Passwords do not match!</p>'
 
-        new_user = User(
+        new_user = Users(
             id=form.id.data,
             email=form.email.data,
             username=form.username.data,
-            vote=0,
             creation_date=str(date.today()),
-            passwd=hashed
+            password=hashed
         )
         db.session.add(new_user)
         db.session.commit()
 
         return redirect(url_for('index'))
     else:
-        return render_template('users_sign_up.html', title=app.config['USER SIGNUP'], form=form,user=current_user)
+        return render_template('users_sign_up.html', title=app.config['USER SIGNUP'], form=form, user=current_user)
 
 
 # sign-out functionality
@@ -87,24 +86,32 @@ def users_sign_out():
     return redirect(url_for('index'))
 
 
+# End of sign in/ sign-up/ sign out
+###########################################################################################################
 
-# End of sign in/ sign-up/ sign out 
+###########################################################################################################
+# Start of helper functions
+
+
+# Ffunction that converts string of comma separated values to a Python list.
+# users = csv_to_list(form.players.data)
+# ^ This is what it looks like to use this while pulling from form data. If nothing was entered, it'll return None
+def csv_to_list(input_users):
+    if input_users == "":
+        return None
+    else:
+        users_list = input_users.split(",")
+        return users_list
+    
+
+# End of helper functions
 ###########################################################################################################
 
 ###########################################################################################################
 # Start of user-facing routes
 
-# User's personal homebrew classes
-@app.route('/personal_homebrew', methods=['GET', 'POST'])
-def personal_homebrew():
-    return render_template('personal_homebrew.html',user=current_user)
-
-# All homebrew classes
-@app.route('/community_homebrew', methods=['GET', 'POST'])
-def community_homebrew():
-    return render_template('community_homebrew.html',user=current_user)
 
 # User's own profile page
 @app.route('/my_profile', methods=['GET', 'POST'])
 def my_profile():
-    return render_template('my_profile.html',user=current_user)
+    return render_template('my_profile.html', user=current_user)
