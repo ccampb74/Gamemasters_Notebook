@@ -162,7 +162,7 @@ def campaign_create():
         db.session.add(new_campaign)
         db.session.commit()
 
-        return redirect(url_for('campaign'))
+        return redirect(url_for('campaign',id=form.id.data))
     else:
         print ("failure")
         return render_template('campaign_create.html', user=current_user, form=form)
