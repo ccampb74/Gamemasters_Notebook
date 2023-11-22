@@ -104,17 +104,6 @@ def users_sign_out():
 ###########################################################################################################
 # Start of helper functions
 
-# sign-out functionality
-@app.route('/testing', methods=['GET', 'POST'])
-def testing():
-    foobar = csv_to_list("o,v,r,werwerwer")
-    if foobar:
-        print("all users exist!")
-    else:
-        print("one of the users does not exist.")
-    return redirect(url_for('index'))
-
-
 # Function that converts string of comma separated values to a Python list.
 # users = csv_to_list(form.players.data)
 # ^ This is what it looks like to use this while pulling from form data. If nothing was entered, it'll return None
@@ -152,17 +141,23 @@ def campaign_create():
     form = CampaignForm()
     if form.validate_on_submit():
 
-        new_campaign = Campaigns(
-            id= form.id.data,
-            name=form.name.data,
-            general_story=form.general_story.data,
-            game_master_id=current_user.id,
-        )
+        players = csv_to_list(form.player.data)
 
-        db.session.add(new_campaign)
-        db.session.commit()
+        if players == None:
+            return '<p>One of more of the player IDs entered is incorrect. Please check for typos!</p>'
+        else:
+            new_campaign = Campaigns(
+                id= form.id.data,
+                name=form.name.data,
+                general_story=form.general_story.data,
+                game_master_id=current_user.id,
+                player_ids=str(players)
+            )
 
-        return redirect(url_for('campaign',id=form.id.data))
+            db.session.add(new_campaign)
+            db.session.commit()
+
+            return redirect(url_for('campaign',id=form.id.data))
     else:
         print ("failure")
         return render_template('campaign_create.html', user=current_user, form=form)
@@ -181,10 +176,12 @@ def campaign(id):
         campaign_name = campaign.name
         campaign_general_story = campaign.general_story
         campaign_game_master_id = campaign.game_master_id
+        campaign_players = campaign.player_ids
     print (campaign_id)
     print (campaign_general_story)
     print (campaign_game_master_id)
     print (campaign_name)
+    print(campaign_players)
     return render_template('campaign_display.html', user=current_user, campaign=campaign)
 
 
