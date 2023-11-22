@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block main %}
+<h2> Campaign Name </h2>
+    <p> {{ campaign.name }} </p>
+<h2> The Story so Far... </h2>
+    <p> {{ campaign.general_story }} </p>
+<h2> Your GM </h2>
+    <p> {{ campaign.game_master_id }} </p>
+
+{% endblock %}

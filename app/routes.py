@@ -6,8 +6,8 @@ Description: Project 03 - DnD Class Website - Team "Squirt"
 '''
 
 from app import app, db, load_user
-from app.models import Users, Campaigns, Characters, SessionEvents
-from app.forms import SignUpForm, SignInForm, CampaignForm
+from app.models import Users
+from app.forms import SignUpForm, SignInForm
 from flask import render_template, url_for, redirect
 from flask_login import login_user, logout_user, current_user, login_required
 import bcrypt
@@ -33,12 +33,11 @@ def users_sign_in():
         id = form.id.data
         passwd = form.passwd.data
         hashed_passwd = passwd.encode('utf-8')
-        print (id)
 
         user = load_user(id)
 
         if user:
-            if bcrypt.checkpw(hashed_passwd, user.password):
+            if bcrypt.checkpw(hashed_passwd, user.passwd):
                 login_user(user)
             else:
                 return '<p>Incorrect Password!</p>'
@@ -66,7 +65,6 @@ def users_sign_up():
             return '<p>Passwords do not match!</p>'
 
         new_user = Users(
-            id=form.id.data,
             email=form.email.data,
             username=form.username.data,
             creation_date=str(date.today()),
@@ -91,78 +89,43 @@ def users_sign_out():
 ###########################################################################################################
 
 ###########################################################################################################
-# Start of helper functions
-
-
-# Function that converts string of comma separated values to a Python list.
-# users = csv_to_list(form.players.data)
-# ^ This is what it looks like to use this while pulling from form data. If nothing was entered, it'll return None
-def csv_to_list(input_users):
-    if input_users == "":
-        return None
-    else:
-        real_users = Users.query.all()          # queries all users
-        users_list = input_users.split(",")     # splits csv into a Python list
-        length_of_list = len(users_list)        # finds length of list to iterate through in for loop
-
-        for real_user in real_users:            # separates user ids from user objects
-            real_user_id = real_user.id
-
-        for i in range(length_of_list):         # for each item in users_list, check if a user exists with that id
-            if users_list[i] != real_user_id:
-                print("This user ID: " + users_list[i] + " does not exist. Please try again.")
-                return None
-
-        return users_list
-    
-
-# End of helper functions
-###########################################################################################################
-
-###########################################################################################################
 # Start of user-facing routes
 
-#campaign creation page
+# Campaign creation and campaign page routes
+
 @app.route('/new_campaign', methods=['GET', 'POST'])
 @login_required
 def campaign_create():
     form = CampaignForm()
     if form.validate_on_submit():
 
-        new_campaign = Campaigns(
-            id= form.id.data,
-            name=form.name.data,
-            general_story=form.general_story.data,
-            game_master_id=current_user.id,
+        new_campaign = Product(
+            image=form.image.data,
+            code=form.code.data,
+            description=form.description.data,
+            type=form.type.data,
+            available=form.available.data,
+            price=form.price.data
         )
 
-        db.session.add(new_campaign)
+        db.session.add(new_product)
         db.session.commit()
 
-        return redirect(url_for('campaign'))
+        return redirect(url_for('catalog_admin'))
     else:
-        print ("failure")
-        return render_template('campaign_create.html', user=current_user, form=form)
+        return render_template('product_create.html', user=current_user, form=form)
 
-@app.route('/campaigns', methods=['GET','POST'])
-def campaigns():
-    campaigns = Campaigns.query.all()  
-    return render_template('all_campaigns.html',user=current_user,campaigns=campaigns,id=id)
 
-#individual campaign page
-@app.route('/campaign/<id>', methods=['GET', 'POST'])
-def campaign(id):
-    campaign_search= Campaigns.query.filter_by(id=id).all()
-    for campaign in campaign_search:            # separates user ids from user objects
-        campaign_id = campaign.id
-        campaign_name = campaign.name
-        campaign_general_story = campaign.general_story
-        campaign_game_master_id = campaign.game_master_id
-    print (campaign_id)
-    print (campaign_general_story)
-    print (campaign_game_master_id)
-    print (campaign_name)
-    return render_template('campaign_display.html', user=current_user, campaign=campaign)
+# User's personal homebrew classes
+@app.route('/personal_homebrew', methods=['GET', 'POST'])
+def personal_homebrew():
+    return render_template('personal_homebrew.html', user=current_user)
+
+
+# All homebrew classes
+@app.route('/community_homebrew', methods=['GET', 'POST'])
+def community_homebrew():
+    return render_template('community_homebrew.html', user=current_user)
 
 
 # User's own profile page
