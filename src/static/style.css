@@ -1,97 +1,160 @@
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: medium;
-  }
-  
-  h1 {
-    color: #3498db;
-    margin-left: 20px;
-  }
-  
-  table, th, td {
-    border: 1px solid;
-    padding: 5px
-  }
-  
-  th {
-    background-color: #3498db;
-    color: white
-  }
-  
-  input[type=submit] {
-    background-color: #3498db;
-    padding: 10px 20px;
-    font-size: 18px;
-    border: none;
-    cursor: pointer;
-    margin: 0 10px;
-    border-radius: 5px;
-    color: #fff;
-  }
-  
-  
-  
-  .odd_row {
-    background-color: white;
-  }
-  
-  .even_row {
-    background-color: rgb(223, 221, 221);
-  }
-  
-  
-  img {
-    height: 100px;
-    width: auto;
-  }
-  
-  .img_logo {
-    height: 150px;
-    width: auto;
-  }
-  
-  .welcome-stuff {
-    text-align: center;
-    padding: 20px;
-  }
-  .welcome-text {
-    font-size: 36px;
-    color: #333;
-  }
-  .subtext {
-    font-size: 18px;
-    margin-top: 10px;
-    color: #666;
-  }
-  .button-stuff {
-    margin-top: 20px;
-  }
-  .button {
-    background-color: #3498db;
-    color: #fff;
-    padding: 10px 20px;
-    font-size: 18px;
-    border: none;
-    cursor: pointer;
-    margin: 0 10px;
-    border-radius: 5px;
-  }
-  
-  .button_back {
-    background-color: #d32a2a;
-    color: #fff;
-    padding: 10px 20px;
-    font-size: 18px;
-    border: none;
-    cursor: pointer;
-    margin: 0 10px;
-    border-radius: 5px;
-  }
-  .sign-in {
-    background-color: #3498db;
-    color: #fff;
-  }
-  .sign-up {
-    background-color: #2ecc71;
-    color: #fff;
-  }
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: medium;
+}
+
+
+h1 {
+  color: #3498db;
+  margin-left: 20px;
+}
+
+table, th, td {
+  border: 1px solid;
+  padding: 5px
+}
+
+th {
+  background-color: #3498db;
+  color: white
+}
+
+input[type=submit] {
+  background-color: #3498db;
+  padding: 10px 20px;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  margin: 0 10px;
+  border-radius: 5px;
+  color: #fff;
+}
+
+
+
+.odd_row {
+  background-color: white;
+}
+
+.even_row {
+  background-color: rgb(223, 221, 221);
+}
+
+
+img {
+  height: 100px;
+  width: auto;
+}
+
+.img_logo {
+  height: 150px;
+  width: auto;
+}
+
+.welcome-stuff {
+  text-align: center;
+  padding: 20px;
+}
+.welcome-text {
+  font-size: 36px;
+  color: #333;
+}
+.subtext {
+  font-size: 18px;
+  margin-top: 10px;
+  color: #666;
+}
+.button-stuff {
+  margin-top: 20px;
+}
+.button {
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  margin: 0 10px;
+  border-radius: 5px;
+}
+
+.button_back {
+  background-color: #d32a2a;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  margin: 0 10px;
+  border-radius: 5px;
+}
+.sign-in {
+  background-color: #3498db;
+  color: #fff;
+}
+.sign-up {
+  background-color: #2ecc71;
+  color: #fff;
+}
+
+/* kareena css */
+
+.container {
+  width: 90%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.main-content, .sidebar {
+background: white;
+padding: 20px;
+}
+.main-content {
+flex: 3;
+}
+
+.main-content .campaign-h1 {
+font-size: 48px; /* or any other size */
+line-height: 1.2; /* Adjust line height for better readability */
+font-weight: bold; /* Optional: if you want to make the font bolder */
+margin-bottom: 10px; /* Space below the title */
+/* Add other styles as needed */
+}
+
+.sidebar {
+flex: 1;
+margin-left: 20px;
+}
+.sidebar ul {
+list-style: none;
+}
+.sidebar li a {
+display: block;
+background-color: #e1e1e1;
+padding: 10px;
+margin-bottom: 10px;
+color: black;
+text-decoration: none;
+}
+.sidebar li a:hover {
+background-color: #c9c9c9;
+}
+.sidebar button {
+display: block;
+width: 100%; /* Makes the button extend full width of the sidebar */
+padding: 10px;
+margin-bottom: 10px;
+background-color: #007BFF; /* Bootstrap primary color for example */
+color: white;
+text-decoration: none;
+text-align: center;
+border: none;
+border-radius: 5px; /* Rounded corners */
+cursor: pointer;
+font-size: 16px;
+transition: background-color 0.3s ease; /* Smooth background color transition */
+}
+.sidebar button:hover {
+background-color: #0056b3; /* Darker shade on hover */
+}
