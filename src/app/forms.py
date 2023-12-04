@@ -25,9 +25,10 @@ class SignInForm(FlaskForm):
     passwd = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Confirm')
 
+
 class CampaignForm(FlaskForm):
     id = IntegerField('ID', validators=[DataRequired()])
     name = StringField('Name', validators=[DataRequired()])
-    general_story= StringField('General Story', validators=[DataRequired()])
-    player= StringField('Player usernames, seperated by commas', validators=[DataRequired()])
+    general_story = StringField('General Story', validators=[DataRequired()])
+    player = StringField('Player usernames, seperated by commas', validators=[DataRequired()])
     submit = SubmitField('Submit')

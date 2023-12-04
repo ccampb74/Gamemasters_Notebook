@@ -8,7 +8,7 @@ Description: Project 03 - DnD Class Website - Team "Squirt"
 from app import app, db, load_user
 from app.models import Users, Campaigns, Characters, SessionEvents
 from app.forms import SignUpForm, SignInForm, CampaignForm
-from flask import render_template, url_for, redirect
+from flask import render_template, url_for, redirect, flash
 from flask_login import login_user, logout_user, current_user, login_required
 import bcrypt
 from datetime import date
@@ -33,7 +33,6 @@ def users_sign_in():
         id = form.id.data
         passwd = form.passwd.data
         hashed_passwd = passwd.encode('utf-8')
-        print (id)
 
         user = load_user(id)
 
@@ -60,10 +59,21 @@ def users_sign_up():
     if form.validate_on_submit():
         passwd = form.passwd.data
         passwd_confirm = form.passwd_confirm.data
+
         if passwd == passwd_confirm:
             hashed = bcrypt.hashpw(passwd.encode('utf-8'), bcrypt.gensalt())
         else:
             return '<p>Passwords do not match!</p>'
+
+        # checks for id user id entered already exists
+        existing_users = Users.query.all()
+        list_of_existing_user_ids = []
+
+        for user in existing_users:
+            list_of_existing_user_ids.append(user.id)
+
+        if form.id.data in list_of_existing_user_ids:
+            return '<p>This user ID is already taken, please try another.</p>'
 
         new_user = Users(
             id=form.id.data,
@@ -93,7 +103,6 @@ def users_sign_out():
 ###########################################################################################################
 # Start of helper functions
 
-
 # Function that converts string of comma separated values to a Python list.
 # users = csv_to_list(form.players.data)
 # ^ This is what it looks like to use this while pulling from form data. If nothing was entered, it'll return None
@@ -101,20 +110,22 @@ def csv_to_list(input_users):
     if input_users == "":
         return None
     else:
-        real_users = Users.query.all()          # queries all users
-        users_list = input_users.split(",")     # splits csv into a Python list
-        length_of_list = len(users_list)        # finds length of list to iterate through in for loop
+        all_current_user_objects = Users.query.all()  # queries all users
+        list_of_existing_user_ids = []  # instantiates an empty list
 
-        for real_user in real_users:            # separates user ids from user objects
-            real_user_id = real_user.id
+        for individual_user_object in all_current_user_objects:  # separates user ids from user objects into a list of user IDs
+            list_of_existing_user_ids.append(individual_user_object.id)
 
-        for i in range(length_of_list):         # for each item in users_list, check if a user exists with that id
-            if users_list[i] != real_user_id:
-                print("This user ID: " + users_list[i] + " does not exist. Please try again.")
+        list_of_users_to_add = input_users.split(",")  # splits csv into a Python list
+        length_of_list = len(list_of_users_to_add)  # finds length of list to iterate through in for loop
+
+        for i in range(length_of_list):  # for each item in users_list, check if a user exists with that id
+            if list_of_users_to_add[i] not in list_of_existing_user_ids:
+                print("This user ID: " + list_of_users_to_add[i] + " does not exist. Please try again.")
                 return None
 
-        return users_list
-    
+        return list_of_users_to_add
+
 
 # End of helper functions
 ###########################################################################################################
@@ -122,46 +133,56 @@ def csv_to_list(input_users):
 ###########################################################################################################
 # Start of user-facing routes
 
-#campaign creation page
+# campaign creation page
 @app.route('/new_campaign', methods=['GET', 'POST'])
 @login_required
 def campaign_create():
     form = CampaignForm()
     if form.validate_on_submit():
 
-        new_campaign = Campaigns(
-            id= form.id.data,
-            name=form.name.data,
-            general_story=form.general_story.data,
-            game_master_id=current_user.id,
-        )
+        players = csv_to_list(form.player.data)
 
-        db.session.add(new_campaign)
-        db.session.commit()
+        if players == None:
+            return '<p>One of more of the player IDs entered is incorrect. Please check for typos!</p>'
+        else:
+            new_campaign = Campaigns(
+                id=form.id.data,
+                name=form.name.data,
+                general_story=form.general_story.data,
+                game_master_id=current_user.id,
+                player_ids=str(players)
+            )
 
-        return redirect(url_for('campaign'))
+            db.session.add(new_campaign)
+            db.session.commit()
+
+            return redirect(url_for('campaign', id=form.id.data))
     else:
-        print ("failure")
+        print("failure")
         return render_template('campaign_create.html', user=current_user, form=form)
 
-@app.route('/campaigns', methods=['GET','POST'])
-def campaigns():
-    campaigns = Campaigns.query.all()  
-    return render_template('all_campaigns.html',user=current_user,campaigns=campaigns,id=id)
 
-#individual campaign page
+@app.route('/campaigns', methods=['GET', 'POST'])
+def campaigns():
+    campaigns = Campaigns.query.all()
+    return render_template('all_campaigns.html', user=current_user, campaigns=campaigns, id=id)
+
+
+# individual campaign page
 @app.route('/campaign/<id>', methods=['GET', 'POST'])
 def campaign(id):
-    campaign_search= Campaigns.query.filter_by(id=id).all()
-    for campaign in campaign_search:            # separates user ids from user objects
+    campaign_search = Campaigns.query.filter_by(id=id).all()
+    for campaign in campaign_search:  # separates user ids from user objects
         campaign_id = campaign.id
         campaign_name = campaign.name
         campaign_general_story = campaign.general_story
         campaign_game_master_id = campaign.game_master_id
-    print (campaign_id)
-    print (campaign_general_story)
-    print (campaign_game_master_id)
-    print (campaign_name)
+        campaign_players = campaign.player_ids
+    print(campaign_id)
+    print(campaign_general_story)
+    print(campaign_game_master_id)
+    print(campaign_name)
+    print(campaign_players)
     return render_template('campaign_display.html', user=current_user, campaign=campaign)
 
 

@@ -6,7 +6,7 @@ Description: Project 03 - DnD Class Website - Team "Squirt"
 '''
 
 from flask_login import UserMixin
-from sqlalchemy import ForeignKey, Integer, String, LargeBinary
+from sqlalchemy import ForeignKey, Integer, String, LargeBinary, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app import db
 
@@ -15,7 +15,7 @@ from app import db
 class Users(db.Model, UserMixin):
     __tablename__ = 'user_table'
     id: Mapped[str] = mapped_column(String, primary_key=True)
-    username: Mapped[str] = mapped_column(String, unique=True, nullable=False)
+    username: Mapped[str] = mapped_column(String, nullable=False)
     email: Mapped[str] = mapped_column(String, nullable=False)
     password: Mapped[bytes] = mapped_column(LargeBinary, nullable=False)
     creation_date: Mapped[str] = mapped_column(String)
@@ -25,9 +25,10 @@ class Users(db.Model, UserMixin):
 class Campaigns(db.Model):
     __tablename__ = 'campaign_table'
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    name: Mapped[str] = mapped_column(String, unique=True, nullable=False)
+    name: Mapped[str] = mapped_column(String, nullable=False)
     general_story: Mapped[str] = mapped_column(String)
     game_master_id: Mapped[str] = mapped_column(ForeignKey("user_table.id"))
+    player_ids: Mapped[list] = mapped_column(Text)
     game_master: Mapped["Users"] = relationship()
 
 
