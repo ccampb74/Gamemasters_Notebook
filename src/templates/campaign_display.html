@@ -1,14 +1,13 @@
 {% extends 'base.html' %}
 {% block main %}
+
 <h2> Campaign Name </h2>
     <p> {{ campaign.name }} </p>
 <h2> The Story so Far... </h2>
     <p> {{ campaign.general_story }} </p>
-<h2> Your GM </h2>
+<h2> your GM </h2>
     <p> {{ campaign.game_master_id }} </p>
-    {% if user == campaign.game_master_id %}
-        <h2> Private Notes </h2>
-        <label for="Notes">Notes:</label>
-    {% endif %}
-
+<h2>GM Notes</h2>
+    <label for="Notes"></label>
+    <textarea id="Notes" name="Notes" rows="5" cols="33"> Enter notes here...</textarea>
 {% endblock %}

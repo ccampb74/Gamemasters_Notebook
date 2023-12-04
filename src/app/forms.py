@@ -32,3 +32,8 @@ class CampaignForm(FlaskForm):
     general_story = StringField('General Story', validators=[DataRequired()])
     player = StringField('Player usernames, seperated by commas', validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+
+class NoteForm(FlaskForm):
+    private_note = StringField('Notes')
+    submit = SubmitField('Confirm')

@@ -6,8 +6,8 @@ Description: Project 03 - DnD Class Website - Team "Squirt"
 '''
 
 from app import app, db, load_user
-from app.models import Users, Campaigns, Characters, SessionEvents
-from app.forms import SignUpForm, SignInForm, CampaignForm
+from app.models import Users, Campaigns, Characters, SessionEvents, PrivateNotes
+from app.forms import SignUpForm, SignInForm, CampaignForm, NoteForm
 from flask import render_template, url_for, redirect, flash
 from flask_login import login_user, logout_user, current_user, login_required
 import bcrypt
@@ -183,7 +183,19 @@ def campaign(id):
     print(campaign_game_master_id)
     print(campaign_name)
     print(campaign_players)
-    return render_template('campaign_display.html', user=current_user, campaign=campaign)
+
+    gm_private_note = submit_note(campaign_id)
+    return render_template('campaign_display.html', user=current_user, campaign=campaign, private_note=gm_private_note)
+
+
+def submit_note(campaign_id):
+    form = NoteForm()
+    private_note = PrivateNotes(
+        id=form.id.data,
+        note=form.private_note.data,
+        creation_date=form.creation_date.data,
+        id_of_campaign=campaign_id
+    )
 
 
 # User's own profile page
