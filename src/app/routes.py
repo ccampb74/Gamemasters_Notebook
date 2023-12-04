@@ -183,15 +183,10 @@ def campaign(id):
 
     # creation of private notes start here
     private_note_form = NoteForm()
+    send_private_note = submit_note(campaign_id, private_note_form)
+    private_notes = PrivateNotes.query.filter_by(campaign_id=campaign_id).all()
 
-    if current_user.id == campaign_game_master_id:
-        send_private_note = submit_note(campaign_id, private_note_form)
-        private_notes = PrivateNotes.query.filter_by(campaign_id=campaign_id).all()
-        print('in if with these notes: ', private_notes)
-
-    return render_template('campaign_display.html', user=current_user, campaign=campaign,
-                           private_notes=private_notes, private_note_form=private_note_form,
-                           send_private_note=send_private_note)
+    return render_template('campaign_display.html', user=current_user, campaign=campaign, private_notes=private_notes, private_note_form=private_note_form, send_private_note=send_private_note)
 
 
 def submit_note(campaign_id, private_note_form):
@@ -211,6 +206,8 @@ def submit_note(campaign_id, private_note_form):
             flash("enter note", "error")
             return None
     # private note creation ends here
+
+# def character_creation(campaign_id,)
 
 # User's own profile page
 @app.route('/my_profile', methods=['GET', 'POST'])
