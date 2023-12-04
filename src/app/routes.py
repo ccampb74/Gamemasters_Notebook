@@ -13,7 +13,6 @@ from flask_login import login_user, logout_user, current_user, login_required
 import bcrypt
 from datetime import date
 
-
 @app.route('/')
 @app.route('/index')
 @app.route('/index.html')
@@ -168,10 +167,12 @@ def campaigns():
     return render_template('all_campaigns.html', user=current_user, campaigns=campaigns, id=id)
 
 
+
 # individual campaign page
 @app.route('/campaign/<id>', methods=['GET', 'POST'])
 def campaign(id):
     private_note_form = NoteForm()
+
     campaign_search = Campaigns.query.filter_by(id=id).all()
 
     for campaign in campaign_search:  # separates user ids from user objects
@@ -182,7 +183,7 @@ def campaign(id):
         campaign_players = campaign.player_ids
 
     if current_user.id == campaign_game_master_id:
-        send_private_note = submit_note(campaign_id)
+        send_private_note = submit_note(campaign_id, private_note_form)
         private_notes = PrivateNotes.query.filter_by(campaign_id=campaign_id).all()
         print('in if with these notes: ', private_notes)
 
@@ -191,18 +192,28 @@ def campaign(id):
                            send_private_note=send_private_note)
 
 
-def submit_note(campaign_id):
-    form = NoteForm()
+def submit_note(campaign_id, private_note_form):
     print("i am in the submit func of campaign_id: ", campaign_id)
 
-    if form.validate_on_submit():
-        private_note = PrivateNotes(
-            note=form.private_note.data,
-            campaign_id=campaign_id,
-        )
-        db.session.add(private_note)
-        db.session.commit()
-        return private_note
+
+    if private_note_form.validate_on_submit():
+        print("in if of func")
+        note = private_note_form.private_note.data
+
+        if note:
+            private_note = PrivateNotes(
+                note=note,
+                campaign_id=campaign_id,
+            )
+            db.session.add(private_note)
+            db.session.commit()
+            print(private_note.note)
+            # PrivateNotes.query.delete()
+            # db.session.commit()
+            return private_note
+        else:
+            flash("enter note", "error")
+            return None
 
 
 # User's own profile page

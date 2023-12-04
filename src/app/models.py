@@ -61,4 +61,4 @@ class PrivateNotes(db.Model):
     note: Mapped[str] = mapped_column(String)
     creation_date: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
     campaign_id: Mapped[int] = mapped_column(ForeignKey("campaign_table.id"))
-    campaign: Mapped["Campaigns"] = relationship()
+    campaign: Mapped["Campaigns"] = relationship(backref="private_note")

@@ -9,16 +9,20 @@
     <p> {{ campaign.game_master_id }} </p>
 
 {% if user.id == campaign.game_master_id %}
-    <h2>GM Notes</h2>
-    <label for="Notes"></label>
-    <textarea id="Notes" name="Notes" rows="5" cols="33"> Enter notes here...</textarea>
     <form method="POST" action="{{  url_for('campaign', id=campaign.id) }}">
+
+        <h2>GM Notes</h2>
+        <label for="private_note"></label>
+        <textarea id="private_note" name="private_note" rows="5" cols="33"> Enter notes here...</textarea>
         {{ private_note_form.hidden_tag() }}
         {{ private_note_form.submit() }}
-    {% for note in private_notes %}
-        <p>{{ note.private_note }}</p>
-        <p>{{ note.creation_date }}</p>
-    {% endfor %}
+
+
+        {% for note in private_notes %}
+            <p>{{ note.note }}</p>
+            <p>{{ note.creation_date }}</p>
+        {% endfor %}
+
     </form>
 
 {% endif %}
