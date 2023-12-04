@@ -6,8 +6,9 @@ Description: Project 03 - DnD Class Website - Team "Squirt"
 '''
 
 from flask_login import UserMixin
-from sqlalchemy import ForeignKey, Integer, String, LargeBinary, Text
+from sqlalchemy import ForeignKey, Integer, String, LargeBinary, Text, DateTime
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+from datetime import datetime
 from app import db
 
 
@@ -58,6 +59,6 @@ class PrivateNotes(db.Model):
     __tablename__ = 'private_note'
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     note: Mapped[str] = mapped_column(String)
-    creation_date: Mapped[str] = mapped_column(String)
+    creation_date: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
     campaign_id: Mapped[int] = mapped_column(ForeignKey("campaign_table.id"))
     campaign: Mapped["Campaigns"] = relationship()

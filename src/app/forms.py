@@ -36,4 +36,5 @@ class CampaignForm(FlaskForm):
 
 class NoteForm(FlaskForm):
     private_note = StringField('Notes')
+    creation_date = DateField('Date', validators=[DataRequired()])
     submit = SubmitField('Confirm')

@@ -171,31 +171,38 @@ def campaigns():
 # individual campaign page
 @app.route('/campaign/<id>', methods=['GET', 'POST'])
 def campaign(id):
+    private_note_form = NoteForm()
     campaign_search = Campaigns.query.filter_by(id=id).all()
+
     for campaign in campaign_search:  # separates user ids from user objects
         campaign_id = campaign.id
         campaign_name = campaign.name
         campaign_general_story = campaign.general_story
         campaign_game_master_id = campaign.game_master_id
         campaign_players = campaign.player_ids
-    print(campaign_id)
-    print(campaign_general_story)
-    print(campaign_game_master_id)
-    print(campaign_name)
-    print(campaign_players)
 
-    gm_private_note = submit_note(campaign_id)
-    return render_template('campaign_display.html', user=current_user, campaign=campaign, private_note=gm_private_note)
+    if current_user.id == campaign_game_master_id:
+        send_private_note = submit_note(campaign_id)
+        private_notes = PrivateNotes.query.filter_by(campaign_id=campaign_id).all()
+        print('in if with these notes: ', private_notes)
+
+    return render_template('campaign_display.html', user=current_user, campaign=campaign,
+                           private_notes=private_notes, private_note_form=private_note_form,
+                           send_private_note=send_private_note)
 
 
 def submit_note(campaign_id):
     form = NoteForm()
-    private_note = PrivateNotes(
-        id=form.id.data,
-        note=form.private_note.data,
-        creation_date=form.creation_date.data,
-        id_of_campaign=campaign_id
-    )
+    print("i am in the submit func of campaign_id: ", campaign_id)
+
+    if form.validate_on_submit():
+        private_note = PrivateNotes(
+            note=form.private_note.data,
+            campaign_id=campaign_id,
+        )
+        db.session.add(private_note)
+        db.session.commit()
+        return private_note
 
 
 # User's own profile page
