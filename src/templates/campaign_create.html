@@ -9,7 +9,7 @@
             <p>{{ form.id.label }} <br> {{ form.id(size=10) }}</p>
             <p>{{ form.name.label }} <br> {{ form.name(size=10) }}</p>
             <p>{{ form.general_story.label }} <br> {{form.general_story(size=30)}}</p>
-            <p>{{ form.player.label }} <br> {{form.player(size=30)}}</p>
+            <p>{{ form.players.label }} <br> {{form.players(size=30)}}</p>
             <p>{{ form.submit() }}
                 <button type="button" class="button_back" onclick=confirmed_action("{{ url_for('index') }}")>Back to Home</button>
             </p>
