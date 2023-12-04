@@ -6,5 +6,9 @@
     <p> {{ campaign.general_story }} </p>
 <h2> Your GM </h2>
     <p> {{ campaign.game_master_id }} </p>
+    {% if user == campaign.game_master_id %}
+        <h2> Private Notes </h2>
+        <label for="Notes">Notes:</label>
+    {% endif %}
 
 {% endblock %}
