@@ -195,10 +195,7 @@ def campaign(id):
 
 
 def submit_note(campaign_id, private_note_form):
-    print("i am in the submit func of campaign_id: ", campaign_id)
-
     if private_note_form.validate_on_submit():
-        print("in if of func")
         note = private_note_form.private_note.data
 
         if note:
@@ -208,9 +205,7 @@ def submit_note(campaign_id, private_note_form):
             )
             db.session.add(private_note)
             db.session.commit()
-            print(private_note.note)
-            # PrivateNotes.query.delete()
-            # db.session.commit()
+
             return private_note
         else:
             flash("enter note", "error")
