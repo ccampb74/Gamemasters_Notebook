@@ -13,6 +13,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 import bcrypt
 from datetime import date
 
+
 @app.route('/')
 @app.route('/index')
 @app.route('/index.html')
@@ -167,11 +168,9 @@ def campaigns():
     return render_template('all_campaigns.html', user=current_user, campaigns=campaigns, id=id)
 
 
-
 # individual campaign page
 @app.route('/campaign/<id>', methods=['GET', 'POST'])
 def campaign(id):
-    private_note_form = NoteForm()
 
     campaign_search = Campaigns.query.filter_by(id=id).all()
 
@@ -181,6 +180,9 @@ def campaign(id):
         campaign_general_story = campaign.general_story
         campaign_game_master_id = campaign.game_master_id
         campaign_players = campaign.player_ids
+
+    # creation of private notes start here
+    private_note_form = NoteForm()
 
     if current_user.id == campaign_game_master_id:
         send_private_note = submit_note(campaign_id, private_note_form)
@@ -194,7 +196,6 @@ def campaign(id):
 
 def submit_note(campaign_id, private_note_form):
     print("i am in the submit func of campaign_id: ", campaign_id)
-
 
     if private_note_form.validate_on_submit():
         print("in if of func")
@@ -214,7 +215,7 @@ def submit_note(campaign_id, private_note_form):
         else:
             flash("enter note", "error")
             return None
-
+    # private note creation ends here
 
 # User's own profile page
 @app.route('/my_profile', methods=['GET', 'POST'])
