@@ -191,13 +191,20 @@ def campaign(id):
 
     # creation of private notes start here
     private_note_form = NoteForm()
-    send_private_note = submit_note(campaign_id, private_note_form)
-    private_notes = PrivateNotes.query.filter_by(campaign_id=campaign_id).all()
 
-    return render_template('campaign_display.html', user=current_user, campaign=campaign, campaign_id=campaign_id, private_notes=private_notes, private_note_form=private_note_form, send_private_note=send_private_note)
+    if current_user.id == campaign_game_master_id:
+        send_private_note = submit_note(campaign_id, private_note_form)
+        private_notes = PrivateNotes.query.filter_by(campaign_id=campaign_id).all()
+        return render_template('campaign_display.html', user=current_user,
+                               send_private_note=send_private_note, private_notes=private_notes,
+                               private_note_form=private_note_form, campaign=campaign)
+    else:
+        return render_template('campaign_display.html', user=current_user,
+                               campaign=campaign)
 
 
 def submit_note(campaign_id, private_note_form):
+
     if private_note_form.validate_on_submit():
         note = private_note_form.private_note.data
 
@@ -208,7 +215,7 @@ def submit_note(campaign_id, private_note_form):
             )
             db.session.add(private_note)
             db.session.commit()
-
+            print(private_note.note)
             return private_note
         else:
             flash("enter note", "error")
