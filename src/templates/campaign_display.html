@@ -6,11 +6,11 @@
 <h2> The Story so Far... </h2>
     <p> {{ campaign.general_story }} </p>
 <h2> Players in Campaign </h2>
-    <p> {{ campaign.player_ids }} </p>
+    <p> {{ campaign.players }} </p>
 <h2> Your GM </h2>
     <p> {{ campaign.game_master_id }} </p>
 
-<button type="button" class="button" onclick=simple_action("{{ url_for('all_characters', id = campaign.id, gm_id = campaign.game_master_id) }}")>Character Page</button>
+<button type="button" class="button" onclick=simple_action("{{ url_for('all_characters', id = campaign.id, gm_id = campaign.game_master_id) }}")>Characters</button>
 
 {% if user.id == campaign.game_master_id %}
     <form method="POST" action="{{  url_for('campaign', id=campaign.id) }}">

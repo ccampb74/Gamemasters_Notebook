@@ -7,7 +7,7 @@ Description: Project 03 - DnD Class Website - Team "Squirt"
 
 from app import app, db, load_user
 from app.models import Users, Campaigns, Characters, SessionEvents, PrivateNotes
-from app.forms import SignUpForm, SignInForm, CampaignForm, NoteForm, CharacterForm
+from app.forms import SignUpForm, SignInForm, CampaignForm, NoteForm, CharacterForm, CharacterEditForm
 from flask import render_template, url_for, redirect, flash
 from flask_login import login_user, logout_user, current_user, login_required
 import bcrypt
@@ -159,11 +159,18 @@ def campaign_create():
         return render_template('campaign_create.html', user=current_user, form=form)
 
 @app.route('/campaigns', methods=['GET','POST'])
-def campaigns(): 
-    username= current_user.id
-    campaigns = Campaigns.query.filter(Campaigns.players.contains(username))
+def campaigns():
 
-    return render_template('all_campaigns.html',user=current_user,campaigns=campaigns,id=id)
+    # checks to see if a user is currently logged in or not
+    if current_user.is_authenticated:
+        username= current_user.id
+        campaigns = Campaigns.query.filter(Campaigns.players.contains(username))
+        
+        return render_template('all_campaigns.html',user=current_user,campaigns=campaigns,id=id)
+    else:
+        return render_template('all_campaigns.html',user=current_user)
+
+    
 
 # individual campaign page
 @app.route('/campaign/<id>', methods=['GET', 'POST'])
@@ -222,6 +229,7 @@ def character_creation(id,gm_id):
             character_story = form.character_story.data,
         )
 
+        print(new_character)
         db.session.add(new_character)
         db.session.commit()
 
@@ -232,11 +240,30 @@ def character_creation(id,gm_id):
 
 @app.route('/campaign/<id>/<gm_id>/all_characters', methods=['GET', 'POST'])
 def all_characters(id,gm_id):
-    characters = Characters.query.filter_by(campaign_id=gm_id).all()
-    return render_template('all_campaigns.html', user=current_user, characters=characters, id=id, gm_id=gm_id)
+    characters = Characters.query.filter_by(campaign_id=id).all()
+    return render_template('all_characters.html', user=current_user, characters=characters, id=id, gm_id=gm_id)
+
+@app.route('/campaign/<id>/<gm_id>/<char_id>/character_edit', methods=['GET', 'POST'])
+def character_edit(id,gm_id,char_id):
+    character_to_edit = db.session.query(Characters).get(char_id)
+    form = CharacterEditForm(obj=character_to_edit)
+
+    if form.validate_on_submit():
+        form.populate_obj(character_to_edit)
+        db.session.commit()
+
+        return redirect(url_for('all_characters', user=current_user, form=form,id=id,gm_id=gm_id))
+    else:
+        return render_template('character_creation.html',user=current_user, form=form,id=id,gm_id=gm_id)
+
+
+
+# @app.route('/campaign/<id>/<gm_id>/sessions', methods=['GET', 'POST'])
+# def sessions(id,gm_id):
 
 
 # User's own profile page
 @app.route('/my_profile', methods=['GET', 'POST'])
 def my_profile():
     return render_template('my_profile.html', user=current_user)
+

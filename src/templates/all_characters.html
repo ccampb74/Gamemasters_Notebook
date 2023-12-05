@@ -1,7 +1,12 @@
 {% extends 'base.html' %}
 {% block main %}
-<button type="button" class="button" onclick=simple_action("{{ url_for('character_creation', id = id) }}")>Create New Character</button>
+
+{% if user.id == gm_id %}
+<button type="button" class="button" onclick=simple_action("{{ url_for('character_creation', id = id, gm_id = gm_id) }}")>Create New Character</button>
+{% endif %}
+
 <div class="d-flex justify-content-center">
+
     {% for character in characters %}
         
         <div class="block">    
@@ -10,22 +15,30 @@
                     <th>Image</th>
                     <th>Name</th>
                     <th>ID</th>
-                    <th>player_character</th>
-                    <th>am_i_alive</th>
-                    <th>character_story</th>
+                    <th>Player Character?</th>
+                    <th>Alive?</th>
+                    <th>Character Story</th>
+                    {% if user.id == gm_id %}
+                    <th>Edit Character</th>
+                    {% endif %}
                 </tr>
-                
-                <td><img src="{{ rest.image }}"></td>
-                <td><h2>{{ character.name }}</h2></td>
+
+                {% if character.image %}
+                <td><img src="{{ character.image }}"></td>
+                {% else %}
+                <td><img src="https://sunny1063.com/wp-content/uploads/sites/62/2022/05/GettyImages-1345002600.jpg"></td>
+                {% endif %}
+
+                <td><h2>{{ character.name }}</h2></td>  
                 <td>{{ character.id }}</td>
 
-                {% if character.player_character == 'True' %}
+                {% if character.player_character %}
                     <td>Player Character</td>
                 {% else %}
                     <td>Non-Player Character</td>
                 {% endif %}
 
-                {% if character.am_i_alive == 'True' %}
+                {% if character.am_i_alive %}
                     <td>Alive</td>
                 {% else %}
                     <td>Dead</td>
@@ -33,14 +46,16 @@
                 
                 <td>{{ character.character_story }}</td>
 
+                {% if user.id == gm_id %}
+                <td><button type="button" class="button" onclick=simple_action("{{ url_for('character_edit', char_id=character.id, id=id, gm_id=gm_id) }}")>Edit</button></td>
+                {% endif %}
                 </tr>
-                {% endfor %}
                 </table>
                 <br/>
-        </div>
 
     {% endfor %}
+</div>
 
-
+<button type="button" class="button" onclick=simple_action("{{ url_for('campaign', id=id) }}")>Back to Campaign</button>
 
 {% endblock %}
