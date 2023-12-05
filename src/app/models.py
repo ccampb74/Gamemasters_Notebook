@@ -29,7 +29,6 @@ class Campaigns(db.Model):
     name: Mapped[str] = mapped_column(String, nullable=False)
     general_story: Mapped[str] = mapped_column(String)
     game_master_id: Mapped[str] = mapped_column(ForeignKey("user_table.id"))
-    player_ids: Mapped[list] = mapped_column(Text)
     game_master: Mapped["Users"] = relationship()
     players: Mapped[str] = mapped_column(String)
 

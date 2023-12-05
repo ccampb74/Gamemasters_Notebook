@@ -142,6 +142,7 @@ def campaign_create():
         game_master_id = current_user.id
         players_list= game_master_id + " " + form.players.data
         print (players_list)
+
         new_campaign = Campaigns(
             id= form.id.data,
             name=form.name.data,
@@ -176,7 +177,7 @@ def campaign(id):
         campaign_name = campaign.name
         campaign_general_story = campaign.general_story
         campaign_game_master_id = campaign.game_master_id
-        campaign_players = campaign.player_ids
+        campaign_players = campaign.players
 
     # creation of private notes start here
     private_note_form = NoteForm()
