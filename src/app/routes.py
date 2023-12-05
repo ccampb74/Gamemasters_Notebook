@@ -139,33 +139,30 @@ def csv_to_list(input_users):
 def campaign_create():
     form = CampaignForm()
     if form.validate_on_submit():
+        game_master_id = current_user.id
+        players_list= game_master_id + " " + form.players.data
+        print (players_list)
+        new_campaign = Campaigns(
+            id= form.id.data,
+            name=form.name.data,
+            general_story=form.general_story.data,
+            game_master_id=current_user.id,
+            players= players_list,
+        )
 
-        players = csv_to_list(form.player.data)
+        db.session.add(new_campaign)
+        db.session.commit()
 
-        if players == None:
-            return '<p>One of more of the player IDs entered is incorrect. Please check for typos!</p>'
-        else:
-            new_campaign = Campaigns(
-                id=form.id.data,
-                name=form.name.data,
-                general_story=form.general_story.data,
-                game_master_id=current_user.id,
-                player_ids=str(players)
-            )
-
-            db.session.add(new_campaign)
-            db.session.commit()
-
-            return redirect(url_for('campaign', id=form.id.data))
+        return redirect(url_for('campaigns'))
     else:
         return render_template('campaign_create.html', user=current_user, form=form)
 
+@app.route('/campaigns', methods=['GET','POST'])
+def campaigns(): 
+    username= current_user.id
+    campaigns = Campaigns.query.filter(Campaigns.players.contains(username))
 
-@app.route('/campaigns', methods=['GET', 'POST'])
-def campaigns():
-    campaigns = Campaigns.query.all()
-    return render_template('all_campaigns.html', user=current_user, campaigns=campaigns, id=id)
-
+    return render_template('all_campaigns.html',user=current_user,campaigns=campaigns,id=id)
 
 # individual campaign page
 @app.route('/campaign/<id>', methods=['GET', 'POST'])

@@ -31,7 +31,7 @@ class Campaigns(db.Model):
     game_master_id: Mapped[str] = mapped_column(ForeignKey("user_table.id"))
     player_ids: Mapped[list] = mapped_column(Text)
     game_master: Mapped["Users"] = relationship()
-    characters: Mapped["Characters"] = relationship()
+    players: Mapped[str] = mapped_column(String)
 
 
 # many characters to one user: many to one relationship
