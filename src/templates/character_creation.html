@@ -10,7 +10,7 @@
             <p>{{ form.am_i_alive.label }} <br> {{form.am_i_alive}}</p>
             <p>{{ form.character_story.label }} <br> {{form.character_story(size=150)}}</p>
         <p>{{ form.submit() }}
-            <button type="button" class="button" onclick=confirmed_action("{{ url_for('campaigns') }}")>Back to Campaigns</button>
+            <button type="button" class="button" onclick=confirmed_action("{{ url_for('all_characters', id = id, gm_id = gm_id) }}")>Back to Characters</button>
         </p>
         </form>
         <script type="text/javascript">

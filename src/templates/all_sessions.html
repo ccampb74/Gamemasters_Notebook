@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block main %}
+
+<button type="button" class="button" onclick=simple_action("{{ url_for('session_creation', id = id) }}")>Create New Session</button>
+
+<div class="d-flex justify-content-center">
+
+    {% for session in sessions %}
+        
+        <div class="block">    
+                <table>
+                <tr>
+                    {% if session.event_name %}
+                        <th><h2>Session Name</h2></th>
+                    {% endif %}
+
+                    <th>Session ID</th>
+                    <th>Date of Session</th>
+                    <th>Description</th>
+                    <th>Edit Session</th>
+                </tr>
+
+                {% if session.event_name %}
+                    <th><h2>{{ session.event_name }}</h2></th>
+                {% endif %}
+
+                <td>{{ session.id }}</td>
+                <td>{{ session.date_of_session }}</td>
+                <td>{{ session.description }}</td>
+
+                <td><button type="button" class="button" onclick=simple_action("{{ url_for('session_edit', id=id, session_id=session.id) }}")>Edit</button></td>
+                </tr>
+                </table>
+                <br/>
+
+    {% endfor %}
+</div>
+
+<button type="button" class="button" onclick=simple_action("{{ url_for('campaign', id=id) }}")>Back to Campaign</button>
+
+{% endblock %}

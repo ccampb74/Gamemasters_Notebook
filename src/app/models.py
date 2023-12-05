@@ -46,14 +46,13 @@ class Characters(db.Model):
 
 
 # many session events to one campaign: many to one relationship
-class SessionEvents(db.Model):
+class Sessions(db.Model):
     __tablename__ = 'session_table'
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     event_name: Mapped[str] = mapped_column(String, nullable=False)
-    event_order: Mapped[int] = mapped_column(Integer, nullable=False, autoincrement=True)
+    date_of_session: Mapped[str] = mapped_column(String, nullable=True)
     description: Mapped[str] = mapped_column(String)
     campaign_id: Mapped[int] = mapped_column(ForeignKey("campaign_table.id"))
-    campaign: Mapped["Campaigns"] = relationship()
 
 
 # many private note to one campaign: many to one relationship

@@ -6,8 +6,8 @@ Description: Project 03 - DnD Class Website - Team "Squirt"
 '''
 
 from app import app, db, load_user
-from app.models import Users, Campaigns, Characters, SessionEvents, PrivateNotes
-from app.forms import SignUpForm, SignInForm, CampaignForm, NoteForm, CharacterForm, CharacterEditForm
+from app.models import Users, Campaigns, Characters, Sessions, PrivateNotes
+from app.forms import SignUpForm, SignInForm, CampaignForm, NoteForm, CharacterForm, CharacterEditForm, SessionForm, SessionEditForm
 from flask import render_template, url_for, redirect, flash
 from flask_login import login_user, logout_user, current_user, login_required
 import bcrypt
@@ -133,6 +133,9 @@ def csv_to_list(input_users):
 ###########################################################################################################
 # Start of user-facing routes
 
+
+##################################################
+# start of campaign routes
 # campaign creation page
 @app.route('/new_campaign', methods=['GET', 'POST'])
 @login_required
@@ -158,6 +161,7 @@ def campaign_create():
     else:
         return render_template('campaign_create.html', user=current_user, form=form)
 
+
 @app.route('/campaigns', methods=['GET','POST'])
 def campaigns():
 
@@ -171,7 +175,6 @@ def campaigns():
         return render_template('all_campaigns.html',user=current_user)
 
     
-
 # individual campaign page
 @app.route('/campaign/<id>', methods=['GET', 'POST'])
 def campaign(id):
@@ -210,9 +213,13 @@ def submit_note(campaign_id, private_note_form):
         else:
             flash("enter note", "error")
             return None
-    # private note creation ends here
+# private note creation ends here
+# end of campaign routes
+##################################################
 
 
+##################################################
+# start of character routes
 @app.route('/campaign/<id>/<gm_id>/character_creation', methods=['GET', 'POST'])
 @login_required
 def character_creation(id,gm_id):
@@ -229,7 +236,6 @@ def character_creation(id,gm_id):
             character_story = form.character_story.data,
         )
 
-        print(new_character)
         db.session.add(new_character)
         db.session.commit()
 
@@ -243,6 +249,7 @@ def all_characters(id,gm_id):
     characters = Characters.query.filter_by(campaign_id=id).all()
     return render_template('all_characters.html', user=current_user, characters=characters, id=id, gm_id=gm_id)
 
+
 @app.route('/campaign/<id>/<gm_id>/<char_id>/character_edit', methods=['GET', 'POST'])
 def character_edit(id,gm_id,char_id):
     character_to_edit = db.session.query(Characters).get(char_id)
@@ -255,11 +262,53 @@ def character_edit(id,gm_id,char_id):
         return redirect(url_for('all_characters', user=current_user, form=form,id=id,gm_id=gm_id))
     else:
         return render_template('character_creation.html',user=current_user, form=form,id=id,gm_id=gm_id)
+# end of character routes
+##################################################
 
 
+##################################################
+# start of session routes
+@app.route('/campaign/<id>/session_creation', methods=['GET', 'POST'])
+def session_creation(id):
+    form = SessionForm()
+    if form.validate_on_submit():
 
-# @app.route('/campaign/<id>/<gm_id>/sessions', methods=['GET', 'POST'])
-# def sessions(id,gm_id):
+        new_session = Sessions(
+            campaign_id = id,
+            id = form.id.data,
+            event_name = form.event_name.data,
+            date_of_session = form.date_of_session.data,
+            description = form.description.data,
+        )
+
+        db.session.add(new_session)
+        db.session.commit()
+
+        return (redirect(url_for('all_sessions',id=id)))
+    else:
+        return render_template('session_creation.html', user=current_user, form=form, id=id)
+
+
+@app.route('/campaign/<id>/sessions', methods=['GET', 'POST'])
+def all_sessions(id):
+    sessions = Sessions.query.filter_by(campaign_id=id).all()
+    return render_template('all_sessions.html', user=current_user, sessions=sessions, id=id)
+
+
+@app.route('/campaign/<id>/<session_id>/session_edit', methods=['GET', 'POST'])
+def session_edit(id,session_id):
+    session_to_edit = db.session.query(Sessions).get(session_id)
+    form = SessionEditForm(obj=session_to_edit)
+
+    if form.validate_on_submit():
+        form.populate_obj(session_to_edit)
+        db.session.commit()
+
+        return redirect(url_for('all_sessions', user=current_user, form=form, id=id))
+    else:
+        return render_template('session_creation.html',user=current_user, form=form, id=id)
+# end of session routes
+##################################################
 
 
 # User's own profile page

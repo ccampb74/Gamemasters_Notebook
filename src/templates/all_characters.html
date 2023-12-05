@@ -47,7 +47,7 @@
                 <td>{{ character.character_story }}</td>
 
                 {% if user.id == gm_id %}
-                <td><button type="button" class="button" onclick=simple_action("{{ url_for('character_edit', char_id=character.id, id=id, gm_id=gm_id) }}")>Edit</button></td>
+                <td><button type="button" class="button" onclick=simple_action("{{ url_for('character_edit', id=id, gm_id=gm_id, char_id=character.id) }}")>Edit</button></td>
                 {% endif %}
                 </tr>
                 </table>
