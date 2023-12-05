@@ -187,18 +187,17 @@ def campaign(id):
     if current_user.id == campaign_game_master_id:
         send_private_note = submit_note(campaign_id, private_note_form)
         private_notes = PrivateNotes.query.filter_by(campaign_id=campaign_id).all()
-        print('in if with these notes: ', private_notes)
-
-    return render_template('campaign_display.html', user=current_user, campaign=campaign,
-                           private_notes=private_notes, private_note_form=private_note_form,
-                           send_private_note=send_private_note)
+        return render_template('campaign_display.html', user=current_user,
+                               send_private_note=send_private_note, private_notes=private_notes,
+                               private_note_form=private_note_form, campaign=campaign)
+    else:
+        return render_template('campaign_display.html', user=current_user,
+                               campaign=campaign)
 
 
 def submit_note(campaign_id, private_note_form):
-    print("i am in the submit func of campaign_id: ", campaign_id)
 
     if private_note_form.validate_on_submit():
-        print("in if of func")
         note = private_note_form.private_note.data
 
         if note:
@@ -209,8 +208,6 @@ def submit_note(campaign_id, private_note_form):
             db.session.add(private_note)
             db.session.commit()
             print(private_note.note)
-            # PrivateNotes.query.delete()
-            # db.session.commit()
             return private_note
         else:
             flash("enter note", "error")
