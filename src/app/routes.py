@@ -12,7 +12,7 @@ from flask import render_template, url_for, redirect, flash
 from flask_login import login_user, logout_user, current_user, login_required
 import bcrypt
 from datetime import date
-
+from collections import Counter 
 
 @app.route('/')
 @app.route('/index')
@@ -137,29 +137,44 @@ def csv_to_list(input_users):
 ##################################################
 # start of campaign routes
 # campaign creation page
+
 @app.route('/new_campaign', methods=['GET', 'POST'])
 @login_required
 def campaign_create():
     form = CampaignForm()
     if form.validate_on_submit():
         game_master_id = current_user.id
-        players_list= game_master_id + " " + form.players.data
-        print (players_list)
+        players_in_campaign= game_master_id + " " + form.players.data
+        print (players_in_campaign)
+        all_existing_users= ""
+        users= Users.query.all()
+        for user in users:
+            all_existing_users= all_existing_users + " " + user.id
+        print (all_existing_users)
 
-        new_campaign = Campaigns(
-            id= form.id.data,
-            name=form.name.data,
-            general_story=form.general_story.data,
-            game_master_id=current_user.id,
-            players= players_list,
-        )
+        if is_in(players_in_campaign, all_existing_users):
+            print ("yes")
+            new_campaign = Campaigns(
+                id= form.id.data,
+                name=form.name.data,
+                general_story=form.general_story.data,
+                game_master_id=current_user.id,
+                players= players_in_campaign,
+            )
 
-        db.session.add(new_campaign)
-        db.session.commit()
+            db.session.add(new_campaign)
+            db.session.commit()
+        else:
+            print ("wrong!!!")
+            
 
         return redirect(url_for('campaigns'))
     else:
         return render_template('campaign_create.html', user=current_user, form=form)
+
+
+def is_in(a, b):
+    return not Counter(a) - Counter(b)
 
 
 @app.route('/campaigns', methods=['GET','POST'])
