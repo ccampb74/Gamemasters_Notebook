@@ -195,12 +195,9 @@ def campaign(id):
     if current_user.id == campaign_game_master_id:
         send_private_note = submit_note(campaign_id, private_note_form)
         private_notes = PrivateNotes.query.filter_by(campaign_id=campaign_id).all()
-        return render_template('campaign_display.html', user=current_user,
-                               send_private_note=send_private_note, private_notes=private_notes,
-                               private_note_form=private_note_form, campaign=campaign)
+        return render_template('campaign_display.html', user=current_user, send_private_note=send_private_note, private_notes=private_notes, private_note_form=private_note_form, campaign=campaign)
     else:
-        return render_template('campaign_display.html', user=current_user,
-                               campaign=campaign)
+        return render_template('campaign_display.html', user=current_user, campaign=campaign)
 
 
 def submit_note(campaign_id, private_note_form):
