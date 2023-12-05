@@ -7,7 +7,7 @@ Description: Project 03 - DnD Class Website - Team "Squirt"
 
 from app import app, db, load_user
 from app.models import Users, Campaigns, Characters, SessionEvents, PrivateNotes
-from app.forms import SignUpForm, SignInForm, CampaignForm, NoteForm
+from app.forms import SignUpForm, SignInForm, CampaignForm, NoteForm, CharacterForm
 from flask import render_template, url_for, redirect, flash
 from flask_login import login_user, logout_user, current_user, login_required
 import bcrypt
@@ -158,7 +158,6 @@ def campaign_create():
 
             return redirect(url_for('campaign', id=form.id.data))
     else:
-        print("failure")
         return render_template('campaign_create.html', user=current_user, form=form)
 
 
@@ -174,7 +173,8 @@ def campaign(id):
 
     campaign_search = Campaigns.query.filter_by(id=id).all()
 
-    for campaign in campaign_search:  # separates user ids from user objects
+    # separates user ids from user objects
+    for campaign in campaign_search:  
         campaign_id = campaign.id
         campaign_name = campaign.name
         campaign_general_story = campaign.general_story
@@ -186,7 +186,7 @@ def campaign(id):
     send_private_note = submit_note(campaign_id, private_note_form)
     private_notes = PrivateNotes.query.filter_by(campaign_id=campaign_id).all()
 
-    return render_template('campaign_display.html', user=current_user, campaign=campaign, private_notes=private_notes, private_note_form=private_note_form, send_private_note=send_private_note)
+    return render_template('campaign_display.html', user=current_user, campaign=campaign, campaign_id=campaign_id, private_notes=private_notes, private_note_form=private_note_form, send_private_note=send_private_note)
 
 
 def submit_note(campaign_id, private_note_form):
@@ -207,7 +207,36 @@ def submit_note(campaign_id, private_note_form):
             return None
     # private note creation ends here
 
-# def character_creation(campaign_id,)
+
+@app.route('/campaign/<id>/<gm_id>/character_creation', methods=['GET', 'POST'])
+@login_required
+def character_creation(id,gm_id):
+    form = CharacterForm()
+    if form.validate_on_submit():
+
+        new_character = Characters(
+            campaign_id = id,
+            id = form.id.data,
+            name = form.name.data,
+            image = form.image.data,
+            player_character = form.player_character.data,
+            am_i_alive = form.am_i_alive.data,
+            character_story = form.character_story.data,
+        )
+
+        db.session.add(new_character)
+        db.session.commit()
+
+        return (redirect(url_for('campaign',id=id,gm_id=gm_id)))
+    else:
+        return render_template('character_creation.html', user=current_user, form=form,id=id,gm_id=gm_id)
+    
+
+@app.route('/campaign/<id>/<gm_id>/all_characters', methods=['GET', 'POST'])
+def all_characters(id,gm_id):
+    characters = Characters.query.filter_by(campaign_id=gm_id).all()
+    return render_template('all_campaigns.html', user=current_user, characters=characters, id=id, gm_id=gm_id)
+
 
 # User's own profile page
 @app.route('/my_profile', methods=['GET', 'POST'])

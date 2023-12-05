@@ -6,8 +6,8 @@ Description: Project 03 - DnD Class Website - Team "Squirt"
 '''
 
 from flask_wtf import FlaskForm
-from wtforms import (StringField, PasswordField, SubmitField, IntegerField, DateField)
-from wtforms.validators import DataRequired
+from wtforms import (StringField, PasswordField, SubmitField, IntegerField, BooleanField, DateField)
+from wtforms.validators import DataRequired, Optional
 
 
 # this will need to be edited to reflect Callie's UML Class Diagram
@@ -37,3 +37,13 @@ class CampaignForm(FlaskForm):
 class NoteForm(FlaskForm):
     private_note = StringField('Notes')
     submit = SubmitField('Confirm')
+
+
+class CharacterForm(FlaskForm):
+    id = IntegerField('ID', validators=[DataRequired()])
+    name = StringField('Name', validators=[DataRequired()])
+    image = StringField('Image URL', validators=[Optional()])
+    player_character = BooleanField('Is this a player character?', validators=[Optional()])
+    am_i_alive = BooleanField('Is this character alive?', validators=[Optional()])
+    character_story = StringField('Details or story', validators=[DataRequired()])
+    submit = SubmitField('Create New Character')

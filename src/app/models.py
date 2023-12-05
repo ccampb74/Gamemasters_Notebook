@@ -31,6 +31,7 @@ class Campaigns(db.Model):
     game_master_id: Mapped[str] = mapped_column(ForeignKey("user_table.id"))
     player_ids: Mapped[list] = mapped_column(Text)
     game_master: Mapped["Users"] = relationship()
+    characters: Mapped["Characters"] = relationship()
 
 
 # many characters to one user: many to one relationship
@@ -38,9 +39,11 @@ class Characters(db.Model):
     __tablename__ = 'character_table'
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     name: Mapped[str] = mapped_column(String, nullable=False)
-    player_id: Mapped[int] = mapped_column(ForeignKey("user_table.id"))
-    player: Mapped["Users"] = relationship()
+    image: Mapped[str] = mapped_column(String, nullable=True)
+    player_character: Mapped[int] = mapped_column(Integer, nullable=False)
+    am_i_alive: Mapped[int] = mapped_column(Integer, nullable=False)
     character_story: Mapped[str] = mapped_column(String, nullable=False)
+    campaign_id: Mapped[int] = mapped_column(ForeignKey("campaign_table.id"))
 
 
 # many session events to one campaign: many to one relationship

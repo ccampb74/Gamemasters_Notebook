@@ -7,8 +7,10 @@
     <p> {{ campaign.general_story }} </p>
 <h2> Players in Campaign </h2>
     <p> {{ campaign.player_ids }} </p>
-<h2> your GM </h2>
+<h2> Your GM </h2>
     <p> {{ campaign.game_master_id }} </p>
+
+<button type="button" class="button" onclick=simple_action("{{ url_for('all_characters', id = campaign.id, gm_id = campaign.game_master_id) }}")>Character Page</button>
 
 {% if user.id == campaign.game_master_id %}
     <form method="POST" action="{{  url_for('campaign', id=campaign.id) }}">

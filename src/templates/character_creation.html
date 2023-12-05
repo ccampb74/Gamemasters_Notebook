@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block main %}
+{% if user.id == gm_id %}
+        <form action="" method="POST" novalidate>
+            {{ form.hidden_tag() }}
+            <p>{{ form.id.label }} <br> {{ form.id(size=10) }}</p>
+            <p>{{ form.name.label }} <br> {{ form.name(size=10) }}</p>
+            <p>{{ form.image.label }} <br> {{form.image(size=50)}}</p>
+            <p>{{ form.player_character.label }} <br> {{form.player_character}}</p>
+            <p>{{ form.am_i_alive.label }} <br> {{form.am_i_alive}}</p>
+            <p>{{ form.character_story.label }} <br> {{form.character_story(size=150)}}</p>
+        <p>{{ form.submit() }}
+            <button type="button" class="button" onclick=confirmed_action("{{ url_for('campaigns') }}")>Back to Campaigns</button>
+        </p>
+        </form>
+        <script type="text/javascript">
+            function confirmed_action(target) {
+                if (confirm('Are you sure you want to leave without saving changes?')) {
+                    window.location = target
+                }
+            }
+        </script>
+
+{% else %}
+
+<p />
+Not Authorized
+<p />
+<button type="button" class="button" onclick=confirmed_action("{{ url_for('campaigns') }}")>Back to Campaigns</button>
+<script type="text/javascript">
+    function simple_action(target) {
+        window.location = target
+    }
+</script>
+{% endif %}
+{% endblock %}
