@@ -6,8 +6,10 @@ The main vision for this project was to create a website where tabletop roleplay
 
 ## User Stories
 
-US#1 - As a user, I want to register/log in on the platform, so that I can track my individual campaigns and have them tied to my profile. *Given that a user provides their ID, username, email, and a password, when the user clicks sign-up a new user profile is created with their information stored, and they can sign in with that same information*
-US#2 - As a registered user, I want to create new campaigns as a Game Master for my group so that I can write out the campaign details and let my group see it too. *Given that a user clicks the new campaign button and are signed in, they will be prompted to enter the campaign details, along with a list of their player members*
+### US#1
+As a user, I want to register/log in on the platform, so that I can track my individual campaigns and have them tied to my profile. *Given that a user provides their ID, username, email, and a password, when the user clicks sign-up a new user profile is created with their information stored, and they can sign in with that same information*
+### US#2 
+As a registered user, I want to create new campaigns as a Game Master for my group so that I can write out the campaign details and let my group see it too. *Given that a user clicks the new campaign button and are signed in, they will be prompted to enter the campaign details, along with a list of their player members*
 Describe the user stories designed for the project, including clear acceptance criteria and point estimate for each of them. User stories must be consistent with the use case diagram. Refer to the user stories using US#1, US#2, etc. At least one of the user stories, not related to user creation or authentication, must be detailed by a sequence diagram. 
 
 ## Model 
