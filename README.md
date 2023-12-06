@@ -33,12 +33,7 @@ This section should be used to describe how the scrum methodology was used in th
 |Sprint#|Goals|Start|End|Done|Observations|
 |---|---|---|---|---|---|
 |1|US#1, US#2|11/14/23|11/26/23|US#1, US#2|CSV to list was found out to not work for player input during campaign creation, since lists are not a variable that can be stores in a FlaskSQL db.|
-|2|US#3, US#4, US#5 |11/26/23|12/7/23|US#3, US#4, US#5| * Added character creation, editing, and viewing based on campaign
-* Found a bug where a user that isn't logged in would get an error when trying to access "all campaigns", replaced it with a "please log in first" kinda message
-* Made it such that only the DM can access character creation
-* Fixed bug where boolean alive/pc not working even if checked
-* Added anonymous character image if DM added none for a certain character
-* Added session creation, editing, and viewing based on campaign|
+|2|US#3, US#4, US#5 |11/26/23|12/7/23|US#3, US#4, US#5| * Added character creation, editing, and viewing based on campaign. Found a bug where a user that isn't logged in would get an error when trying to access "all campaigns", replaced it with a "please log in first" kinda message. Made it such that only the DM can access character creation. Fixed bug where boolean alive/pc not working even if checked. Made it so that nonexistent users inputted as players would prevent a campaign from being created
 Use the observations column to report problems encountered during a sprint and/or to reflect on how the team has continuously improved its work.
 
 Feel free to use your own format for this section, as long as you are able to communicate what has been described here.
