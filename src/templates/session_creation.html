@@ -1,20 +1,89 @@
 {% extends 'base.html' %}
 {% block main %}
-        <form action="" method="POST" novalidate>
-            {{ form.hidden_tag() }}
-            <p>{{ form.id.label }} <br> {{ form.id(size=10) }}</p>
-            <p>{{ form.event_name.label }} <br> {{ form.event_name(size=10) }}</p>
-            <p>{{ form.date_of_session.label }} <br> {{ form.date_of_session(size=10) }}</p>
-            <p>{{ form.description.label }} <br> {{form.description(size=300)}}</p>
-        <p>{{ form.submit() }}
-            <button type="button" class="button" onclick=confirmed_action("{{ url_for('campaign', id=id) }}")>Back to Campaign</button>
-        </p>
-        </form>
-        <script type="text/javascript">
-            function confirmed_action(target) {
-                if (confirm('Are you sure you want to leave without saving changes?')) {
-                    window.location = target
-                }
-            }
-        </script>
+
+{% if return_message %}
+<div class="page-wrap"> 
+    <div class="contents">
+      	<br>
+        <section class="content">
+            
+            <h5>{{ return_message }}</h5>
+            <p></p>
+
+            <div class="button-container">
+                <button type="button" class="button-back" onclick=simple_action("{{ url_for('session_creation', id = id) }}")>Back to Session Creation</button>
+            </div>
+
+        </section>
+    </div>
+  </div>
+{% endif %}
+
+{% if user.is_authenticated %}
+<div class="page-wrap"> 
+    <div class="contents">
+      	<br>
+        <section class="content">
+
+            <div class="d-flex justify-content-center">
+                <div class="box">
+                    <h1>Create New Session</h1>
+
+                    <form action="" method="POST" novalidate>
+                        {{ form.hidden_tag() }}
+                        <h3>{{ form.id.label }} <br> {{ form.id(size=10) }}</h3><p></p>
+
+                        <div>
+                            <h3 style="display: inline-block;">{{ form.event_name.label }}</h3>
+                            <h4 style="display: inline-block; margin-left: 4px;">(Optional)</h4>
+                            <br>
+                            {{ form.event_name(size=10) }}
+                            <p></p>
+                        </div>
+
+                        <div>
+                            <h3 style="display: inline-block;">{{ form.date_of_session.label }}</h3>
+                            <h4 style="display: inline-block; margin-left: 4px;">(Optional)</h4>
+                            <br>
+                            {{ form.date_of_session(size=10) }}
+                            <p></p>
+                        </div>
+
+                        <h3>{{ form.description.label }} <br> {{form.description(size=50)}}</h3><p></p>
+
+                        <div class="button-container">
+                            <h3>{{ form.submit() }}<button type="button" class="button-back" onclick=confirmed_action("{{ url_for('campaign', id=id) }}")>Back to Campaign</button></h3>
+                        </div>
+                    </form>
+
+                    <script type="text/javascript">
+                        function confirmed_action(target) {
+                            if (confirm('Are you sure you want to leave without saving changes?')) {
+                                window.location = target
+                            }
+                        }
+                    </script>
+                </div>
+            </div>
+
+        </section>
+    </div>
+  </div>
+
+
+
+
+{% else %}
+    <div class="page-wrap"> 
+        <div class="contents">
+            <br>
+            <section class="content">
+                
+                <h5>Please log in before creating a session.</h5>
+
+            </section>
+        </div>
+    </div>
+
+{% endif %}
 {% endblock %}

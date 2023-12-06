@@ -29,6 +29,8 @@ def index():
 @app.route('/users/signin', methods=['GET', 'POST'])
 def users_sign_in():
     form = SignInForm()
+    return_message = None
+    
     if form.validate_on_submit():
         id = form.id.data
         passwd = form.passwd.data
@@ -40,14 +42,16 @@ def users_sign_in():
             if bcrypt.checkpw(hashed_passwd, user.password):
                 login_user(user)
             else:
-                return '<p>Incorrect Password!</p>'
+                return_message = "Incorrect password!"
 
-            if user.id == "admin":
-                return redirect(url_for('admin_index'))
-            else:
-                return redirect(url_for('index'))
+                return render_template('users_sign_in.html',title=app.config['USER SIGNIN'], user=current_user, form=form, return_message=return_message)
+
+            
+            return redirect(url_for('index'))
         else:
-            return '<p>Username not recognized!</p>'
+            return_message = "User ID not recognized!"
+
+            return render_template('users_sign_in.html',title=app.config['USER SIGNIN'], user=current_user, form=form, return_message=return_message)
     else:
         return render_template('users_sign_in.html', title=app.config['USER SIGNIN'], form=form, user=current_user)
 
@@ -56,6 +60,8 @@ def users_sign_in():
 @app.route('/users/signup', methods=['GET', 'POST'])
 def users_sign_up():
     form = SignUpForm()
+    return_message = None
+    
     if form.validate_on_submit():
         passwd = form.passwd.data
         passwd_confirm = form.passwd_confirm.data
@@ -63,9 +69,11 @@ def users_sign_up():
         if passwd == passwd_confirm:
             hashed = bcrypt.hashpw(passwd.encode('utf-8'), bcrypt.gensalt())
         else:
-            return '<p>Passwords do not match!</p>'
+            return_message = "Passwords do not match!"
 
-        # checks for id user id entered already exists
+            return render_template('users_sign_up.html',title=app.config['USER SIGNUP'], user=current_user, form=form, return_message=return_message)
+
+        # checks for if user id entered already exists
         existing_users = Users.query.all()
         list_of_existing_user_ids = []
 
@@ -73,7 +81,9 @@ def users_sign_up():
             list_of_existing_user_ids.append(user.id)
 
         if form.id.data in list_of_existing_user_ids:
-            return '<p>This user ID is already taken, please try another.</p>'
+            return_message = "This User ID is already taken, please try another."
+
+            return render_template('users_sign_up.html',title=app.config['USER SIGNUP'], user=current_user, form=form, return_message=return_message)
 
         new_user = Users(
             id=form.id.data,
@@ -100,35 +110,7 @@ def users_sign_out():
 # End of sign in/ sign-up/ sign out
 ###########################################################################################################
 
-###########################################################################################################
-# Start of helper functions
 
-# Function that converts string of comma separated values to a Python list.
-# users = csv_to_list(form.players.data)
-# ^ This is what it looks like to use this while pulling from form data. If nothing was entered, it'll return None
-def csv_to_list(input_users):
-    if input_users == "":
-        return None
-    else:
-        all_current_user_objects = Users.query.all()  # queries all users
-        list_of_existing_user_ids = []  # instantiates an empty list
-
-        for individual_user_object in all_current_user_objects:  # separates user ids from user objects into a list of user IDs
-            list_of_existing_user_ids.append(individual_user_object.id)
-
-        list_of_users_to_add = input_users.split(",")  # splits csv into a Python list
-        length_of_list = len(list_of_users_to_add)  # finds length of list to iterate through in for loop
-
-        for i in range(length_of_list):  # for each item in users_list, check if a user exists with that id
-            if list_of_users_to_add[i] not in list_of_existing_user_ids:
-                print("This user ID: " + list_of_users_to_add[i] + " does not exist. Please try again.")
-                return None
-
-        return list_of_users_to_add
-
-
-# End of helper functions
-###########################################################################################################
 
 ###########################################################################################################
 # Start of user-facing routes
@@ -139,9 +121,10 @@ def csv_to_list(input_users):
 # campaign creation page
 
 @app.route('/new_campaign', methods=['GET', 'POST'])
-@login_required
 def campaign_create():
     form = CampaignForm()
+    return_message = None
+
     if form.validate_on_submit():
         game_master_id = current_user.id
         players_in_campaign= game_master_id + " " + form.players.data
@@ -153,7 +136,19 @@ def campaign_create():
         print (all_existing_users)
 
         if is_in(players_in_campaign, all_existing_users):
-            print ("yes")
+
+            # checks for if campaign id entered already exists
+            existing_campaigns = Campaigns.query.all()
+            list_of_existing_campaigns = []
+
+            for campaign in existing_campaigns:
+                list_of_existing_campaigns.append(campaign.id)
+
+            if form.id.data in list_of_existing_campaigns:
+                return_message = "A campaign with that campaign ID already exists. Please try another."
+
+                return render_template('campaign_create.html', user=current_user, form=form, return_message=return_message)
+
             new_campaign = Campaigns(
                 id= form.id.data,
                 name=form.name.data,
@@ -164,22 +159,23 @@ def campaign_create():
 
             db.session.add(new_campaign)
             db.session.commit()
-        else:
-            print ("wrong!!!")
-            
 
-        return redirect(url_for('campaigns'))
+            return redirect(url_for('campaigns'))
+        else:   
+            return_message = "One or more of the User IDs entered wasn't recognized. Please try again."
+
+            return render_template('campaign_create.html', user=current_user, form=form, return_message=return_message)
     else:
         return render_template('campaign_create.html', user=current_user, form=form)
 
-
+# campaign creation helper function
 def is_in(a, b):
     return not Counter(a) - Counter(b)
 
 
 @app.route('/campaigns', methods=['GET','POST'])
 def campaigns():
-
+    
     # checks to see if a user is currently logged in or not
     if current_user.is_authenticated:
         username= current_user.id
@@ -193,7 +189,6 @@ def campaigns():
 # individual campaign page
 @app.route('/campaign/<id>', methods=['GET', 'POST'])
 def campaign(id):
-
     campaign_search = Campaigns.query.filter_by(id=id).all()
 
     # separates user ids from user objects
@@ -207,13 +202,16 @@ def campaign(id):
     # creation of private notes start here
     private_note_form = NoteForm()
 
-    if current_user.id == campaign_game_master_id:
-        send_private_note = submit_note(campaign_id, private_note_form)
-        private_notes = PrivateNotes.query.filter_by(campaign_id=campaign_id).all()
-        
-        return render_template('campaign_display.html', user=current_user, send_private_note=send_private_note, private_notes=private_notes, private_note_form=private_note_form, campaign=campaign)
+    if current_user.is_authenticated:
+        if current_user.id == campaign_game_master_id:
+            send_private_note = submit_note(campaign_id, private_note_form)
+            private_notes = PrivateNotes.query.filter_by(campaign_id=campaign_id).all()
+            
+            return render_template('campaign_display.html', user=current_user, send_private_note=send_private_note, private_notes=private_notes, private_note_form=private_note_form, campaign=campaign, campaign_players=campaign_players)
+        else:
+            return render_template('campaign_display.html', user=current_user, campaign=campaign, campaign_players=campaign_players)
     else:
-        return render_template('campaign_display.html', user=current_user, campaign=campaign)
+        return render_template('campaign_display.html', user=current_user, campaign=campaign, campaign_players=campaign_players)
 
 
 def submit_note(campaign_id, private_note_form):
@@ -243,7 +241,21 @@ def submit_note(campaign_id, private_note_form):
 @login_required
 def character_creation(id,gm_id):
     form = CharacterForm()
+    return_message = None
+
     if form.validate_on_submit():
+
+        # checks for if character id entered already exists
+        existing_characters = Characters.query.all()
+        list_of_existing_characters = []
+
+        for character in existing_characters:
+            list_of_existing_characters.append(character.id)
+
+        if form.id.data in list_of_existing_characters:
+            return_message = "A character with that character ID already exists. Please try another."
+
+            return render_template('character_creation.html', user=current_user, form=form, id=id, gm_id=gm_id, return_message=return_message)
 
         new_character = Characters(
             campaign_id = id,
@@ -258,9 +270,9 @@ def character_creation(id,gm_id):
         db.session.add(new_character)
         db.session.commit()
 
-        return (redirect(url_for('campaign',id=id,gm_id=gm_id)))
+        return (redirect(url_for('all_characters',id=id, gm_id=gm_id)))
     else:
-        return render_template('character_creation.html', user=current_user, form=form,id=id,gm_id=gm_id)
+        return render_template('character_creation.html', user=current_user, form=form, id=id, gm_id=gm_id)
     
 
 @app.route('/campaign/<id>/<gm_id>/all_characters', methods=['GET', 'POST'])
@@ -290,7 +302,21 @@ def character_edit(id,gm_id,char_id):
 @app.route('/campaign/<id>/session_creation', methods=['GET', 'POST'])
 def session_creation(id):
     form = SessionForm()
+    return_message = None
+
     if form.validate_on_submit():
+
+        # checks for if character id entered already exists
+        existing_sessions = Sessions.query.all()
+        list_of_existing_sessions = []
+
+        for session in existing_sessions:
+            list_of_existing_sessions.append(session.id)
+
+        if form.id.data in list_of_existing_sessions:
+            return_message = "A session with that session ID already exists. Please try another."
+
+            return render_template('session_creation.html', user=current_user, form=form, id=id, return_message=return_message)
 
         new_session = Sessions(
             campaign_id = id,
@@ -326,12 +352,16 @@ def session_edit(id,session_id):
         return redirect(url_for('all_sessions', user=current_user, form=form, id=id))
     else:
         return render_template('session_creation.html',user=current_user, form=form, id=id)
+    
+
+@app.route('/campaign/<id>/<session_id>/session_delete', methods=['GET', 'POST'])
+def session_delete(id,session_id):
+    session_to_delete = db.session.query(Sessions).get(session_id)
+
+    db.session.delete(session_to_delete)
+    db.session.commit()
+
+    return redirect(url_for('all_sessions', user=current_user, id=id))
 # end of session routes
 ##################################################
-
-
-# User's own profile page
-@app.route('/my_profile', methods=['GET', 'POST'])
-def my_profile():
-    return render_template('my_profile.html', user=current_user)
 

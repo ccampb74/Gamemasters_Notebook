@@ -1,34 +1,55 @@
 {% extends 'base.html' %}
 {% block main %}
 {% if user.is_authenticated %}
-    <div class="d-flex justify-content-center">
-        <div class="block">
-            <table>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Game Master</th>
-                <th>Go to Campaign</th>
-            </tr>
-            {% for campaign in campaigns %}
-            {% if loop.index % 2 == 0 %}
-            <tr class="even_row">
-                {% else %}
-            <tr class="odd_row">
-                {% endif %}
-                <td>{{ campaign.id }}</td>
-                <td>{{ campaign.name }}</td>
-                <td>{{ campaign.game_master_id }}</td>
-                <td><button type="button" class="button" onclick=simple_action("{{ url_for('campaign', id=campaign.id) }}")>View campaign</button></td>
-            </tr>
-            {% endfor %}
+    <div class="page-wrap"> 
+        <div class="contents">
+            <br>
+            <section class="content">
 
-            </table>
-            <br/>
+                <div class="d-flex justify-content-center">
+                    <div class="block">
+                        <h1>My Campaigns</h1>
+                        <p></p>
+
+                        <table>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Game Master</th>
+                            <th>Go to Campaign</th>
+                        </tr>
+                        {% for campaign in campaigns %}
+                        {% if loop.index % 2 == 0 %}
+                        <tr class="even_row">
+                            {% else %}
+                        <tr class="odd_row">
+                            {% endif %}
+                            <td>{{ campaign.id }}</td>
+                            <td>{{ campaign.name }}</td>
+                            <td>{{ campaign.game_master_id }}</td>
+                            <td><button type="button" class="button" onclick=simple_action("{{ url_for('campaign', id=campaign.id) }}")>View campaign</button></td>
+                        </tr>
+                        {% endfor %}
+            
+                        </table>
+                        <br/>
+                    </div>
+                </script>
+            </section>
         </div>
-    </script>
+  </div>
 
 {% else %}
-<p>Please log in to see your campaigns.</p>
+    <div class="page-wrap"> 
+        <div class="contents">
+            <br>
+            <section class="content">
+                
+                <h5>Please log in to see your campaigns.</h5>
+
+            </section>
+        </div>
+    </div>
+
 {% endif %}
 {% endblock %}

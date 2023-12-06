@@ -12,7 +12,7 @@ from wtforms.validators import DataRequired, Optional
 
 # this will need to be edited to reflect Callie's UML Class Diagram
 class SignUpForm(FlaskForm):
-    id = StringField('Id', validators=[DataRequired()])
+    id = StringField('User ID', validators=[DataRequired()])
     email = StringField('E-mail', validators=[DataRequired()])
     username = StringField('Username', validators=[DataRequired()])
     passwd = PasswordField('Password', validators=[DataRequired()])
@@ -61,15 +61,15 @@ class CharacterEditForm(FlaskForm):
 
 class SessionForm(FlaskForm):
     id = IntegerField('ID', validators=[DataRequired()])
-    event_name = StringField('Name (Optional)', validators=[Optional()])
-    date_of_session = StringField('Date of Session (Optional)', validators=[Optional()])
-    description = StringField('Name', validators=[DataRequired()])
+    event_name = StringField('Name', validators=[Optional()])
+    date_of_session = StringField('Date of Session', validators=[Optional()])
+    description = StringField('Description of Session', validators=[DataRequired()])
     submit = SubmitField('Create New Session')
 
 
 class SessionEditForm(FlaskForm):
     id = IntegerField('ID', validators=[DataRequired()])
-    event_name = StringField('Name (Optional)', validators=[Optional()])
-    date_of_session = StringField('Date of Session (Optional)', validators=[Optional()])
+    event_name = StringField('Name', validators=[Optional()])
+    date_of_session = StringField('Date of Session', validators=[Optional()])
     description = StringField('Description of Session', validators=[DataRequired()])
     submit = SubmitField('Confirm Changes')

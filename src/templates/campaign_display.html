@@ -1,34 +1,106 @@
 {% extends 'base.html' %}
 {% block main %}
+{% if user.is_authenticated %}
 
-<h2> Campaign Name </h2>
-    <p> {{ campaign.name }} </p>
-<h2> The Story so Far... </h2>
-    <p> {{ campaign.general_story }} </p>
-<h2> Players in Campaign </h2>
-    <p> {{ campaign.players }} </p>
-<h2> Your GM </h2>
-    <p> {{ campaign.game_master_id }} </p>
+    {% if user.id is in campaign.players %}
+    <div class="page-wrap"> 
+        <div class="contents">
+            <br>
+            <section class="content">
 
-<button type="button" class="button" onclick=simple_action("{{ url_for('all_characters', id = campaign.id, gm_id = campaign.game_master_id) }}")>Characters</button>
-<button type="button" class="button" onclick=simple_action("{{ url_for('all_sessions', id = campaign.id) }}")>Sessions</button>
+                <div class="d-flex justify-content-center">
+                    <div class="box">
 
-{% if user.id == campaign.game_master_id %}
-    <form method="POST" action="{{  url_for('campaign', id=campaign.id) }}">
+                        <h1> {{ campaign.name }} </h1>
+                        <br>
 
-        <h2>GM Notes</h2>
-        <label for="private_note"></label>
-        <textarea id="private_note" name="private_note" rows="5" cols="33"> Enter notes here...</textarea>
-        {{ private_note_form.hidden_tag() }}
-        {{ private_note_form.submit() }}
+                        <div class="button-container">
+                            <button type="button" class="button" onclick=simple_action("{{ url_for('all_characters', id = campaign.id, gm_id = campaign.game_master_id) }}")>Characters</button>
+                            <button type="button" class="button" onclick=simple_action("{{ url_for('all_sessions', id = campaign.id) }}")>Sessions</button>
+                            <button type="button" class="button-back" onclick=simple_action("{{ url_for('campaigns') }}")>Back</button>
+                        </div>
+                        <br>
 
 
-        {% for note in private_notes %}
-            <p>{{ note.note }}</p>
-            <p>{{ note.creation_date }}</p>
-        {% endfor %}
+                        <h2> Your GM: </h2>
+                        <h5> {{ campaign.game_master_id }} </h5>
+                        <p></p>
 
-    </form>
+                        <h2> Players in Campaign: </h2>
+                        <h5> {{ campaign.players }} </h5>
+                        <p></p>
+
+
+                        <h2> Our Story Begins... : </h2>
+                        <h5> {{ campaign.general_story }} </h5>
+                        <p></p>
+
+                        <hr style="background-color: #000000; height: 3px; width: 100%;">
+
+                        {% if user.id == campaign.game_master_id %}
+                            <form method="POST" action="{{  url_for('campaign', id=campaign.id) }}">
+
+                            <h2>GM Notes:</h2>
+                            <div style="text-align: center;">
+                                <h4 style="display: inline-block;">(Only you can see these).</h4>
+                            </div>
+                                
+                            <div style="text-align: center;">
+                                <label for="private_note"></label>
+                                <textarea id="private_note" name="private_note" rows="5" cols="33"> Enter notes here...</textarea>
+                                {{ private_note_form.hidden_tag() }}
+                                <div class="button-container">{{ private_note_form.submit() }}</div>
+                            </div>
+                            <br>
+
+                            <div class="button-container">
+                                {% for note in private_notes %}
+                                    <h5>{{ note.note }}</h5>
+                                    <h4>{{ note.creation_date }}</h4>
+                                    <br>
+                                {% endfor %}
+                            </div>
+                            
+
+                            </form>
+                        {% endif %}
+
+                    </div>
+                </div>
+
+            </section>
+        </div>
+    </div>
+
+    {% else %}
+    <div class="page-wrap"> 
+        <div class="contents">
+            <br>
+            <section class="content">
+                
+                <h5>You are not registered as a player in this campaign.</h5>
+                <p></p>
+
+                <div class="button-container">
+                    <button type="button" class="button-back" onclick=simple_action("{{ url_for('campaigns') }}")>Back to My Campaigns</button>
+                </div>
+
+            </section>
+        </div>
+    </div>
+    {% endif %}
+
+{% else %}
+  <div class="page-wrap"> 
+      <div class="contents">
+          <br>
+          <section class="content">
+              
+              <h5>Please log in to view this campaign.</h5>
+
+          </section>
+      </div>
+  </div>
+
 {% endif %}
-
 {% endblock %}
