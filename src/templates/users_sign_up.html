@@ -1,5 +1,19 @@
 {% extends 'base.html' %}
 {% block main %}
+
+{% if return_message %}
+<div class="page-wrap"> 
+    <div class="contents">
+      	<br>
+        <section class="content">
+            
+            <h5>{{ return_message }}</h5>
+
+        </section>
+    </div>
+  </div>
+{% endif %}
+
 <div class="page-wrap"> 
     <div class="contents">
       <br>

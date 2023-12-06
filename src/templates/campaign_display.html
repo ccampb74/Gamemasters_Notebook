@@ -14,6 +14,8 @@
                     <div class="button-container">
                         <button type="button" class="button" onclick=simple_action("{{ url_for('all_characters', id = campaign.id, gm_id = campaign.game_master_id) }}")>Characters</button>
                         <button type="button" class="button" onclick=simple_action("{{ url_for('all_sessions', id = campaign.id) }}")>Sessions</button>
+                        <button type="button" class="button-back" onclick=simple_action("{{ url_for('campaigns') }}")>Back</button>
+
                     </div>
                     <br>
 

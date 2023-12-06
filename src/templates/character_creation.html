@@ -1,5 +1,24 @@
 {% extends 'base.html' %}
 {% block main %}
+
+{% if return_message %}
+<div class="page-wrap"> 
+    <div class="contents">
+      	<br>
+        <section class="content">
+            
+            <h5>{{ return_message }}</h5>
+            <p></p>
+
+            <div class="button-container">
+            <button type="button" class="button" onclick=simple_action("{{ url_for('character_creation', id = id, gm_id = gm_id) }}")>Back to Character Creation</button>
+            </div>
+
+        </section>
+    </div>
+  </div>
+{% endif %}
+
 {% if user.id == gm_id %}
 <div class="page-wrap"> 
     <div class="contents">

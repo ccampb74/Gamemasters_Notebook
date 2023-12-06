@@ -8,9 +8,9 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-custom">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">What's in a Name?</a>
+          <a class="navbar-brand" href="#">The Game Master's Notebook</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -29,15 +29,12 @@
             </ul>
             
             <span class="navbar-text">
-                {% if user.username|length %}
-                Hello {{user.username}}!
-                    <button type="button" class="modern-button" onclick=simple_action("{{ url_for('my_profile') }}")>My Profile</button>
+                {% if user.is_authenticated %}
+                <h0>Welcome, {{user.username}}!  </h0>  
                     <button type="button" class="modern-button" onclick=simple_action("{{ url_for('users_sign_out') }}")>Sign Out</button>
                 {% else %}
-                    <button type="button" class="modern-button" onclick=simple_action("{{ url_for('users_sign_in') }}")>Sign
-                        In</button>
-                    <button type="button" class="modern-button" onclick=simple_action("{{ url_for('users_sign_up') }}")>Sign
-                        Up</button>
+                    <button type="button" class="modern-button" onclick=simple_action("{{ url_for('users_sign_in') }}")>Sign In</button>
+                    <button type="button" class="modern-button" onclick=simple_action("{{ url_for('users_sign_up') }}")>Sign Up</button>
                 {% endif %}
             </span>
     
