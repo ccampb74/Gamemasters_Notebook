@@ -9,19 +9,19 @@ The main vision for this project was to create a website where tabletop roleplay
 
 ### US#1
 10 PTS - As a user, I want to register/log in on the platform, so that I can track my individual campaigns and have them tied to my profile. 
-* *Given that a user provides their ID, username, email, and a password, when the user clicks sign-up a new user profile is created with their information stored, and they can sign in with that same information*
+* *Given that a user provides their ID, username, email, and a password, when the user clicks sign-up a new user profile is created with their information stored, and they can sign in with that same information.*
 ### US#2 
 20 PTS - As a registered user, I want to view and create new campaigns as a Game Master for my group so that I can write out the campaign details and let my group see it too. 
-* *Given that a signed in user clicks the campaign button, they will be able to view their current campaigns or given the option to enter new campaign details, along with a list of their player members*
+* *Given that a signed in user clicks the campaign button, they will be able to view their current campaigns or given the option to enter new campaign details, along with a list of their player members.*
 ### US#3
 15 PTS - As a Game Master, I want to add new sessions to pre-existing campaigns so that me and my players can see recaps of what happened previously. 
-* *Given that a user who created a campaign views the campaign page, they can add in sessions that will then save in the order of most recent*
+* *Given that a user who created a campaign views the campaign page, they can add in sessions that will then save in the order of most recent.*
 ### US#4
 30 PTS - As a Game Master, I want to add and edit characters to my campaigns so that me and my players can keep track of who all they've met, who are player characters, and who is still alive. 
-* *Given that a user who created a campaign views the campaign page, they can add in and edit characters of relevance to the group*
+* *Given that a user who created a campaign views the campaign page, they can add in and edit characters of relevance to the group.*
 ### US# 5
 10 PTS - As a Game Master, I want to add private notes that player users cannot see, so that I can keep track of story elements that would be spoilers to them. 
-* *Given that a user who created a campaign views the campaign page, they can add in private notes to the campaign that only they can see*
+* *Given that a user who created a campaign views the campaign page, they can add in private notes to the campaign that only they can see.*
 ## Model 
 
 The following class diagram was used to build the model:  ![Class Diagram](https://cdn.discordapp.com/attachments/1154504238156746863/1181769384243515454/CS1_Final_class_UML_9.png?ex=65824381&is=656fce81&hm=01a6c5f250edce599a7366d8dfc5b2dd9769075cc7fac0cce5b70e85c7edc3fa&)
@@ -32,8 +32,13 @@ This section should be used to describe how the scrum methodology was used in th
 
 |Sprint#|Goals|Start|End|Done|Observations|
 |---|---|---|---|---|---|
-|1|US#1, US#2, ...|mm/dd/23|mm/dd/23|US#1|...|
-
+|1|US#1, US#2|11/14/23|11/26/23|US#1, US#2|CSV to list was found out to not work for player input during campaign creation, since lists are not a variable that can be stores in a FlaskSQL db.|
+|2|US#3, US#4, US#5 |11/26/23|12/7/23|US#3, US#4, US#5| * Added character creation, editing, and viewing based on campaign
+* Found a bug where a user that isn't logged in would get an error when trying to access "all campaigns", replaced it with a "please log in first" kinda message
+* Made it such that only the DM can access character creation
+* Fixed bug where boolean alive/pc not working even if checked
+* Added anonymous character image if DM added none for a certain character
+* Added session creation, editing, and viewing based on campaign|
 Use the observations column to report problems encountered during a sprint and/or to reflect on how the team has continuously improved its work.
 
 Feel free to use your own format for this section, as long as you are able to communicate what has been described here.
