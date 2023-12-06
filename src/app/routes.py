@@ -145,7 +145,7 @@ def campaign_create():
                 list_of_existing_campaigns.append(campaign.id)
 
             if form.id.data in list_of_existing_campaigns:
-                return_message = "A campaign already exists with that campaign ID. Please try another."
+                return_message = "A campaign with that campaign ID already exists. Please try another."
 
                 return render_template('campaign_create.html', user=current_user, form=form, return_message=return_message)
 
@@ -240,7 +240,7 @@ def submit_note(campaign_id, private_note_form):
 def character_creation(id,gm_id):
     form = CharacterForm()
     return_message = None
-    
+
     if form.validate_on_submit():
 
         # checks for if character id entered already exists
@@ -251,7 +251,7 @@ def character_creation(id,gm_id):
             list_of_existing_characters.append(character.id)
 
         if form.id.data in list_of_existing_characters:
-            return_message = "A character already exists with that character ID. Please try another."
+            return_message = "A character with that character ID already exists. Please try another."
 
             return render_template('character_creation.html', user=current_user, form=form, id=id, gm_id=gm_id, return_message=return_message)
 
@@ -300,7 +300,21 @@ def character_edit(id,gm_id,char_id):
 @app.route('/campaign/<id>/session_creation', methods=['GET', 'POST'])
 def session_creation(id):
     form = SessionForm()
+    return_message = None
+
     if form.validate_on_submit():
+
+        # checks for if character id entered already exists
+        existing_sessions = Sessions.query.all()
+        list_of_existing_sessions = []
+
+        for session in existing_sessions:
+            list_of_existing_sessions.append(session.id)
+
+        if form.id.data in list_of_existing_sessions:
+            return_message = "A session with that session ID already exists. Please try another."
+
+            return render_template('session_creation.html', user=current_user, form=form, id=id, return_message=return_message)
 
         new_session = Sessions(
             campaign_id = id,
