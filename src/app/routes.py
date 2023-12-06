@@ -139,7 +139,6 @@ def csv_to_list(input_users):
 # campaign creation page
 
 @app.route('/new_campaign', methods=['GET', 'POST'])
-@login_required
 def campaign_create():
     form = CampaignForm()
     if form.validate_on_submit():

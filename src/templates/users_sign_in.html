@@ -18,9 +18,16 @@
                                 {{ form.id(size=15) }}
                                 <p></p>
                             </div>
-                            
+
                             <h3>{{ form.passwd.label }} <br> {{ form.passwd(size=30) }}</h3><p></p>
-                            <h3>{{ form.submit() }} <button type="button" class="button_back" onclick=simple_action("{{url_for('index') }}")>Back</button></h3>
+                            
+                            <div class="button-container">
+                                <h3>{{ form.submit() }} <button type="button" class="button_back" onclick=simple_action("{{url_for('index') }}")>Back</button></h3>
+                            </div>
+
+
+                            
+                        
                         </form>
                         <script type="text/javascript">
                             function simple_action(target) {
