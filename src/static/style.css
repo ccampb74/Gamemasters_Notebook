@@ -1,103 +1,161 @@
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: medium;
-  }
-  
-  h1 {
-    color: #3498db;
-    margin-left: 20px;
-  }
+body, html {
+  height: 100%;
+  margin: 0;
+}
 
-  h2 {
-    font-size: 18px;
-    color: #7a1313;
-    margin-left: 20px;
-  }
+body {
+  background: rgb(20, 3, 3);
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+}
+
+.page-wrap {
+  background: url('https://www.runescape.com/l=2/img/rsp777/bg2.jpg') repeat-y center top;
+  background-size: 115%;
+  margin: 0 auto;
+  padding: 0 50px;
+  width: 815px;
+  height: calc(100% - 65px);
+}
+
+.content {
+  background:url('https://www.runescape.com/l=2/img/rsp777/scroll/backdrop_745.gif') repeat-y top center;
+  padding:50px 75px;
+  position:relative
+}
+
+.content:before,
+.content:after {
+  background:url('https://www.runescape.com/l=2/img/rsp777/scroll/backdrop_765_top.gif') no-repeat center top;
+  content:'';
+  height:50px;
+  left:0;
+  position:absolute;
+  top:-11px;
+  width:100%
+}
+
+.content:after {
+  background:url('https://www.runescape.com/l=2/img/rsp777/scroll/backdrop_765_bottom.gif') no-repeat center bottom;
+  bottom:-11px;
+  top:auto
+}
+.home-main-title {
+  color:#6D4211;
+  font-family:initial;
+  font-size:2em;
+  font-weight:bold;
+  margin-bottom:20px;
+  text-align:center;
+  text-shadow:1px 1px 1px #000000
+}
+
+
+
+
+
+
+
+
+
+h1 {
+  color: rgb(71, 7, 7);
+  margin-left: 20px;
+}
+
+h2 {
+  font-size: 18px;
+  color: rgb(110, 14, 14);
+  margin-left: 20px;
+}
+
+h3 {
+  font-size: 18px;
+  color:#000000
+}
+ 
+
+
+
+
+table, th, td {
+  border: 1px solid;
+  padding: 5px
+}
+
+th {
+  background-color: #3498db;
+  color: white
+}
+
+
+
+
+
+
+img {
+  height: 100px;
+  width: auto;
+}
+
+.img_logo {
+  height: 150px;
+  width: auto;
+}
+
+.welcome-stuff {
+  text-align: center;
+  padding: 20px;
+}
+
+.welcome-text {
+  font-size: 36px;
+  color: #333;
+}
+
+.subtext {
+  font-size: 18px;
+  margin-top: 10px;
+  color: #666;
+}
+
+
+
+input[type=submit] {
+  background-color: #6d4211;
+  color: #2b0707;
+  padding: 5px 10px;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  margin: 0 10px;
+  border-radius: 5px;
   
-  table, th, td {
-    border: 1px solid;
-    padding: 5px
-  }
-  
-  th {
-    background-color: #3498db;
-    color: white
-  }
-  
-  input[type=submit] {
-    background-color: #3498db;
-    padding: 10px 20px;
-    font-size: 18px;
-    border: none;
-    cursor: pointer;
-    margin: 0 10px;
-    border-radius: 5px;
-    color: #fff;
-  }
-  
-  
-  
-  .odd_row {
-    background-color: white;
-  }
-  
-  .even_row {
-    background-color: rgb(223, 221, 221);
-  }
-  
-  
-  img {
-    height: 100px;
-    width: auto;
-  }
-  
-  .img_logo {
-    height: 150px;
-    width: auto;
-  }
-  
-  .welcome-stuff {
-    text-align: center;
-    padding: 20px;
-  }
-  .welcome-text {
-    font-size: 36px;
-    color: #333;
-  }
-  .subtext {
-    font-size: 18px;
-    margin-top: 10px;
-    color: #666;
-  }
-  .button-stuff {
-    margin-top: 20px;
-  }
-  .button {
-    background-color: #3498db;
-    color: #fff;
-    padding: 10px 20px;
-    font-size: 18px;
-    border: none;
-    cursor: pointer;
-    margin: 0 10px;
-    border-radius: 5px;
-  }
-  
-  .button_back {
-    background-color: #d32a2a;
-    color: #fff;
-    padding: 10px 20px;
-    font-size: 18px;
-    border: none;
-    cursor: pointer;
-    margin: 0 10px;
-    border-radius: 5px;
-  }
-  .sign-in {
-    background-color: #3498db;
-    color: #fff;
-  }
-  .sign-up {
-    background-color: #2ecc71;
-    color: #fff;
-  }
+}
+
+.button-stuff {
+  margin-top: 20px;
+}
+
+.button {
+  background-color: #3498db;
+  color: #000000;
+  padding: 5px 10px;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  margin: 0 10px;
+  border-radius: 5px;
+}
+
+.button_back {
+  background-color: rgb(161, 63, 63);
+  color: #000000;
+  padding: 5px 10px;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  margin: 0 10px;
+  border-radius: 5px;
+}

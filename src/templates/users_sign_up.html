@@ -1,22 +1,34 @@
 {% extends 'base.html' %}
 {% block main %}
-<div class="d-flex justify-content-center">
-    <div class="box">
-        <h1 class="header-text">Sign Up</h1>
-        <form action="" method="POST" novalidate>
-            {{ form.hidden_tag() }}
-            <p>{{ form.id.label }} <br> {{ form.id(size=30) }}</p>
-            <p>{{ form.email.label }} <br> {{ form.email(size=30) }}</p>
-            <p>{{ form.username.label }} <br> {{ form.username(size=30) }}</p>
-            <p>{{ form.passwd.label }} <br> {{ form.passwd(size=30) }}</p>
-            <p>{{ form.passwd_confirm.label }} <br> {{ form.passwd_confirm(size=30) }}</p>
-            <p>{{ form.submit() }} <button type="button" class="button_back" onclick=simple_action("{{ url_for('index') }}")>Back</button></p>
-        </form>
-        <script type="text/javascript">
-            function simple_action(target) {
-                window.location = target
-            }
-        </script>
+<div class="page-wrap"> 
+    <div class="contents">
+      <br>
+        <section class="content">
+            <div class="d-flex justify-content-center">
+                <div class="box">
+                    <h1 class="header-text">Sign Up</h1>
+                    <form action="" method="POST" novalidate>
+                        {{ form.hidden_tag() }}
+                        <h3>{{ form.id.label }} <br> {{ form.id(size=15) }}</h3><p></p>
+                        <h3>{{ form.email.label }} <br> {{ form.email(size=30) }}</h3><p></p>
+                        <h3>{{ form.username.label }} <br> {{ form.username(size=30) }}</h3><p></p>
+                        <h3>{{ form.passwd.label }} <br> {{ form.passwd(size=30) }}</h3><p></p>
+                        <h3>{{ form.passwd_confirm.label }} <br> {{ form.passwd_confirm(size=30) }}</h3><p></p>
+                        <h3>{{ form.submit() }} <button type="button" class="button_back" onclick=simple_action("{{ url_for('index') }}")>Back</button></h3>
+                    </form>
+                    <script type="text/javascript">
+                        function simple_action(target) {
+                            window.location = target
+                        }
+                    </script>
+                </div>
+            </div>
+
+        </section>
     </div>
-</div>
+  </div>
+
+
+
+
 {% endblock %}
