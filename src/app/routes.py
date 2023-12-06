@@ -189,8 +189,6 @@ def campaigns():
 # individual campaign page
 @app.route('/campaign/<id>', methods=['GET', 'POST'])
 def campaign(id):
-    user = current_user
-
     campaign_search = Campaigns.query.filter_by(id=id).all()
 
     # separates user ids from user objects
@@ -204,7 +202,7 @@ def campaign(id):
     # creation of private notes start here
     private_note_form = NoteForm()
 
-    if user.is_authenticated:
+    if current_user.is_authenticated:
         if current_user.id == campaign_game_master_id:
             send_private_note = submit_note(campaign_id, private_note_form)
             private_notes = PrivateNotes.query.filter_by(campaign_id=campaign_id).all()
