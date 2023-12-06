@@ -8,6 +8,15 @@
 
                 <div class="d-flex justify-content-center">
                     <div class="box">
+                        {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                            
+                                <h5>One or more of the User IDs entered wasn't recognized.</h5>
+                                <h5>Please try again.</h5>
+                        
+                            {% endif %}
+                        {% endwith %}
+
                         <h1 class="header-text">Create New Campaign</h1>
 
                         <form action="" method="POST" novalidate>
@@ -18,7 +27,7 @@
                             <h3>{{ form.general_story.label }} <br> {{form.general_story(size=45)}}</h3><p></p>
 
                             <div class="button-container">
-                                <h3>{{ form.submit() }} <button type="button" class="button_back" onclick=confirmed_action("{{ url_for('index') }}")>Back to Home</button></h3>
+                                <h3>{{ form.submit() }} <button type="button" class="button-back" onclick=confirmed_action("{{ url_for('index') }}")>Back to Home</button></h3>
                             </div>
                             
                         </form>

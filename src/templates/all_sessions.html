@@ -1,41 +1,78 @@
 {% extends 'base.html' %}
 {% block main %}
+{% if user.is_authenticated %}
+    <div class="page-wrap"> 
+        <div class="contents">
+            <br>
+            <section class="content">
 
-<button type="button" class="button" onclick=simple_action("{{ url_for('session_creation', id = id) }}")>Create New Session</button>
+                
+                
+                <div class="d-flex justify-content-center">
+                    <div class="block"> 
+                        <h1>Sessions</h1>
+                        <p></p>
 
-<div class="d-flex justify-content-center">
+                        <div class="button-container">
+                            <button type="button" class="button" onclick=simple_action("{{ url_for('session_creation', id = id) }}")>Create New Session</button>
+                            <button type="button" class="button-back" onclick=simple_action("{{ url_for('campaign', id=id) }}")>Back to Campaign</button>
+                        </div>
+                        <br>
 
-    {% for session in sessions %}
-        
-        <div class="block">    
-                <table>
-                <tr>
-                    {% if session.event_name %}
-                        <th><h2>Session Name</h2></th>
-                    {% endif %}
+                        {% for session in sessions %}
+                                <table>
+                                    <tr>
+                                        <th>Session Name</th>
+                                        <th>Session ID</th>
+                                        <th>Date of Session</th>
+                                        <th>Description</th>
+                                        <th>Edit Session</th>
+                                        <th>Delete Session</th>
+                                    </tr>
 
-                    <th>Session ID</th>
-                    <th>Date of Session</th>
-                    <th>Description</th>
-                    <th>Edit Session</th>
-                </tr>
+                                    {% if session.event_name %}
+                                        <td>{{ session.event_name }}</td>
+                                    {% else %}
+                                        <td>No Session Name</td>
+                                    {% endif %}
 
-                {% if session.event_name %}
-                    <th><h2>{{ session.event_name }}</h2></th>
-                {% endif %}
+                                    <td>{{ session.id }}</td>
+                                    <td>{{ session.date_of_session }}</td>
+                                    <td>{{ session.description }}</td>
 
-                <td>{{ session.id }}</td>
-                <td>{{ session.date_of_session }}</td>
-                <td>{{ session.description }}</td>
+                                    <td><button type="button" class="button" onclick=simple_action("{{ url_for('session_edit', id=id, session_id=session.id) }}")>Edit</button></td>
+                                    <td><button type="button" class="button-back" onclick=confirmed_action("{{ url_for('session_delete', id=id, session_id=session.id) }}")>Delete</button></td>
 
-                <td><button type="button" class="button" onclick=simple_action("{{ url_for('session_edit', id=id, session_id=session.id) }}")>Edit</button></td>
-                </tr>
-                </table>
-                <br/>
+                                    </tr>
+                                </table>
+                                <br>
+                            
+                        {% endfor %}
+                    </div>
+                
+                    <script type="text/javascript">
+                        function confirmed_action(target) {
+                            if (confirm('Are you sure you want to delete this session?')) {
+                                window.location = target
+                            }
+                        }
+                    </script>
 
-    {% endfor %}
-</div>
+            </section>
+        </div>
+    </div>
 
-<button type="button" class="button" onclick=simple_action("{{ url_for('campaign', id=id) }}")>Back to Campaign</button>
+{% else %}
+    <div class="page-wrap"> 
+        <div class="contents">
+            <br>
+            <section class="content">
+                
+                <h5>Please log in to view a session.</h5>
 
+            </section>
+        </div>
+    </div>
+
+{% endif %}
 {% endblock %}

@@ -27,27 +27,39 @@
                     <p></p>
 
 
-                    <h2> The Story so Far... </h2>
+                    <h2> Our Story Begins...: </h2>
                     <h5> {{ campaign.general_story }} </h5>
                     <p></p>
+
+                    <hr style="background-color: #000000; height: 3px; width: 100%;">
 
                     {% if user.id == campaign.game_master_id %}
                         <form method="POST" action="{{  url_for('campaign', id=campaign.id) }}">
 
-                        <h2>GM Notes</h2>
+                        <h2>GM Notes:</h2>
+                        <div style="text-align: center;">
+                            <h4 style="display: inline-block;">(Only you can see these).</h4>
+                        </div>
+                            
+
                         <label for="private_note"></label>
                         <textarea id="private_note" name="private_note" rows="5" cols="33"> Enter notes here...</textarea>
                         {{ private_note_form.hidden_tag() }}
-                        {{ private_note_form.submit() }}
+                        <div class="button-container">{{ private_note_form.submit() }}</div>
+                        <br>
 
-
-                        {% for note in private_notes %}
-                            <p>{{ note.note }}</p>
-                            <p>{{ note.creation_date }}</p>
-                        {% endfor %}
+                        <div class="button-container">
+                            {% for note in private_notes %}
+                                <h5>{{ note.note }}</h5>
+                                <h4>{{ note.creation_date }}</h4>
+                                <br>
+                            {% endfor %}
+                        </div>
+                        
 
                         </form>
                     {% endif %}
+
                 </div>
             </div>
 

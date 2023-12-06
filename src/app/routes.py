@@ -153,6 +153,7 @@ def campaign_create():
 
         if is_in(players_in_campaign, all_existing_users):
             print ("yes")
+
             new_campaign = Campaigns(
                 id= form.id.data,
                 name=form.name.data,
@@ -163,11 +164,13 @@ def campaign_create():
 
             db.session.add(new_campaign)
             db.session.commit()
+
+            return redirect(url_for('campaigns'))
         else:
             print ("wrong!!!")
-            
+            flash("Error")
 
-        return redirect(url_for('campaigns'))
+            return redirect(url_for('campaign_create'))
     else:
         return render_template('campaign_create.html', user=current_user, form=form)
 
@@ -325,6 +328,16 @@ def session_edit(id,session_id):
         return redirect(url_for('all_sessions', user=current_user, form=form, id=id))
     else:
         return render_template('session_creation.html',user=current_user, form=form, id=id)
+    
+
+@app.route('/campaign/<id>/<session_id>/session_delete', methods=['GET', 'POST'])
+def session_delete(id,session_id):
+    session_to_delete = db.session.query(Sessions).get(session_id)
+
+    db.session.delete(session_to_delete)
+    db.session.commit()
+
+    return redirect(url_for('all_sessions', user=current_user, id=id))
 # end of session routes
 ##################################################
 

@@ -61,15 +61,15 @@ class CharacterEditForm(FlaskForm):
 
 class SessionForm(FlaskForm):
     id = IntegerField('ID', validators=[DataRequired()])
-    event_name = StringField('Name (Optional)', validators=[Optional()])
-    date_of_session = StringField('Date of Session (Optional)', validators=[Optional()])
-    description = StringField('Name', validators=[DataRequired()])
+    event_name = StringField('Name', validators=[Optional()])
+    date_of_session = StringField('Date of Session', validators=[Optional()])
+    description = StringField('Description of Session', validators=[DataRequired()])
     submit = SubmitField('Create New Session')
 
 
 class SessionEditForm(FlaskForm):
     id = IntegerField('ID', validators=[DataRequired()])
-    event_name = StringField('Name (Optional)', validators=[Optional()])
-    date_of_session = StringField('Date of Session (Optional)', validators=[Optional()])
+    event_name = StringField('Name', validators=[Optional()])
+    date_of_session = StringField('Date of Session', validators=[Optional()])
     description = StringField('Description of Session', validators=[DataRequired()])
     submit = SubmitField('Confirm Changes')

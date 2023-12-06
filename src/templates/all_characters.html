@@ -1,61 +1,89 @@
 {% extends 'base.html' %}
 {% block main %}
+{% if user.is_authenticated %}
+<div class="page-wrap"> 
+    <div class="contents">
+      	<br>
+        <section class="content">
 
-{% if user.id == gm_id %}
-<button type="button" class="button" onclick=simple_action("{{ url_for('character_creation', id = id, gm_id = gm_id) }}")>Create New Character</button>
-{% endif %}
+            <div class="d-flex justify-content-center">
+                <div class="block">
+                    <h1>Characters</h1>
+                    <p></p>
 
-<div class="d-flex justify-content-center">
+                    <div class="button-container">
+                        {% if user.id == gm_id %}
+                            <button type="button" class="button" onclick=simple_action("{{ url_for('character_creation', id = id, gm_id = gm_id) }}")>Create New Character</button>
+                        {% endif %}
+                        <button type="button" class="button-back" onclick=simple_action("{{ url_for('campaign', id=id) }}")>Back to Campaign</button>
+                    </div>
+                    <br>
 
-    {% for character in characters %}
-        
-        <div class="block">    
-                <table>
-                <tr>
-                    <th>Image</th>
-                    <th>Name</th>
-                    <th>ID</th>
-                    <th>Player Character?</th>
-                    <th>Alive?</th>
-                    <th>Character Story</th>
-                    {% if user.id == gm_id %}
-                    <th>Edit Character</th>
-                    {% endif %}
-                </tr>
+                    {% for character in characters %}
+                        
+                            <table>
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>ID</th>
+                                <th>Player Character?</th>
+                                <th>Alive?</th>
+                                <th>Character Story</th>
+                                {% if user.id == gm_id %}
+                                <th>Edit Character</th>
+                                {% endif %}
+                            </tr>
 
-                {% if character.image %}
-                <td><img src="{{ character.image }}"></td>
-                {% else %}
-                <td><img src="https://sunny1063.com/wp-content/uploads/sites/62/2022/05/GettyImages-1345002600.jpg"></td>
-                {% endif %}
+                            {% if character.image %}
+                            <td><img src="{{ character.image }}"></td>
+                            {% else %}
+                            <td><img src="https://sunny1063.com/wp-content/uploads/sites/62/2022/05/GettyImages-1345002600.jpg"></td>
+                            {% endif %}
 
-                <td><h2>{{ character.name }}</h2></td>  
-                <td>{{ character.id }}</td>
+                            <td><h2>{{ character.name }}</h2></td>  
+                            <td>{{ character.id }}</td>
 
-                {% if character.player_character %}
-                    <td>Player Character</td>
-                {% else %}
-                    <td>Non-Player Character</td>
-                {% endif %}
+                            {% if character.player_character %}
+                                <td>Player Character</td>
+                            {% else %}
+                                <td>Non-Player Character</td>
+                            {% endif %}
 
-                {% if character.am_i_alive %}
-                    <td>Alive</td>
-                {% else %}
-                    <td>Dead</td>
-                {% endif %}
+                            {% if character.am_i_alive %}
+                                <td>Alive</td>
+                            {% else %}
+                                <td>Dead</td>
+                            {% endif %}
+                            
+                            <td>{{ character.character_story }}</td>
+
+                            {% if user.id == gm_id %}
+                                <td><button type="button" class="button" onclick=simple_action("{{ url_for('character_edit', id=id, gm_id=gm_id, char_id=character.id) }}")>Edit</button></td>
+                            {% endif %}
+                            </tr>
+                            </table>
+                            <br>
+                    {% endfor %}
+            </div>
+            
+            
+
+        </section>
+    </div>
+  </div>
+
+
+{% else %}
+    <div class="page-wrap"> 
+        <div class="contents">
+            <br>
+            <section class="content">
                 
-                <td>{{ character.character_story }}</td>
+                <h5>Please log in to view characters.</h5>
 
-                {% if user.id == gm_id %}
-                <td><button type="button" class="button" onclick=simple_action("{{ url_for('character_edit', id=id, gm_id=gm_id, char_id=character.id) }}")>Edit</button></td>
-                {% endif %}
-                </tr>
-                </table>
-                <br/>
+            </section>
+        </div>
+    </div>
 
-    {% endfor %}
-</div>
-
-<button type="button" class="button" onclick=simple_action("{{ url_for('campaign', id=id) }}")>Back to Campaign</button>
-
+{% endif %}
 {% endblock %}
