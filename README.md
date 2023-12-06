@@ -23,7 +23,7 @@ The main vision for this project was to create a website where tabletop roleplay
 10 PTS - As a Game Master, I want to add private notes that player users cannot see, so that I can keep track of story elements that would be spoilers to them. 
 * *Given that a user who created a campaign views the campaign page, they can add in private notes to the campaign that only they can see.*
 ### US#6 (optional)
-10 PTS - As a User, I want a many to many model relationship so that campaign viewing and campaign assignment runs faster (ie, has a better big-O and does not lag).
+40 PTS - As a User, I want a many to many model relationship so that campaign viewing and campaign assignment runs faster (ie, has a better big-O and does not lag).
 * *Given that a user is logged in, the campaigns they are tied to will be handled by a many-to-many db model including a junction table, making it more effective and structured*
 ## Model 
 
