@@ -9,9 +9,24 @@
                     <h1 class="header-text">Sign Up</h1>
                     <form action="" method="POST" novalidate>
                         {{ form.hidden_tag() }}
-                        <h3>{{ form.id.label }} <br> {{ form.id(size=15) }}</h3><p></p>
+
+                        <div>
+                            <h3 style="display: inline-block;">{{ form.id.label }}</h3>
+                            <h4 style="display: inline-block; margin-left: 7px;">You'll use this to log in.</h4>
+                            <br>
+                            {{ form.id(size=15) }}
+                            <p></p>
+                        </div>
+                        
+                        <div>
+                            <h3 style="display: inline-block;">{{ form.username.label }}</h3>
+                            <h4 style="display: inline-block; margin-left: 7px;">This is what others will see you as.</h4>
+                            <br>
+                             {{ form.username(size=30) }}
+                             <p></p>
+                        </div>
+
                         <h3>{{ form.email.label }} <br> {{ form.email(size=30) }}</h3><p></p>
-                        <h3>{{ form.username.label }} <br> {{ form.username(size=30) }}</h3><p></p>
                         <h3>{{ form.passwd.label }} <br> {{ form.passwd(size=30) }}</h3><p></p>
                         <h3>{{ form.passwd_confirm.label }} <br> {{ form.passwd_confirm(size=30) }}</h3><p></p>
                         <h3>{{ form.submit() }} <button type="button" class="button_back" onclick=simple_action("{{ url_for('index') }}")>Back</button></h3>

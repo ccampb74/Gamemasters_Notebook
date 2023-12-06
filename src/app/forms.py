@@ -12,7 +12,7 @@ from wtforms.validators import DataRequired, Optional
 
 # this will need to be edited to reflect Callie's UML Class Diagram
 class SignUpForm(FlaskForm):
-    id = StringField('Id', validators=[DataRequired()])
+    id = StringField('User ID', validators=[DataRequired()])
     email = StringField('E-mail', validators=[DataRequired()])
     username = StringField('Username', validators=[DataRequired()])
     passwd = PasswordField('Password', validators=[DataRequired()])
