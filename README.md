@@ -1,7 +1,7 @@
 # Overview
 
-Use this section to outline the vision for the product to be developed, including a use case diagram that shows the main user interactions with the product, in order to provide readers with an overview of the project.
-
+The main vision for this project was to create a website where tabletop roleplaying games' (TTRPG's) campaigns can be created and tracked along with their relevant information. Current TTRPG websites have some capability for story maintinence and accessibility, but that is not the focus of them. Players and Game Masters alike can access all of the campaigns that they're currently in or running, as well as track what happens each session and view all the characters they've encountered so far. Below is a use case diagram with all of the planned functions. 
+![Use Case Diagram](https://cdn.discordapp.com/attachments/1154504238156746863/1181769384843284662/Use_case_diagram_2.png?ex=65824381&is=656fce81&hm=e25d1525a007b5f3985ac4598ce4006d42e78b0203bd0f49a5e1d236d962212d&)
 # Design
 
 ## User Stories
