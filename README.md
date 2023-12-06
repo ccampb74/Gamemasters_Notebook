@@ -19,9 +19,12 @@ The main vision for this project was to create a website where tabletop roleplay
 ### US#4
 30 PTS - As a Game Master, I want to add and edit characters to my campaigns so that me and my players can keep track of who all they've met, who are player characters, and who is still alive. 
 * *Given that a user who created a campaign views the campaign page, they can add in and edit characters of relevance to the group.*
-### US# 5
+### US#5
 10 PTS - As a Game Master, I want to add private notes that player users cannot see, so that I can keep track of story elements that would be spoilers to them. 
 * *Given that a user who created a campaign views the campaign page, they can add in private notes to the campaign that only they can see.*
+### US#6
+10 PTS - As a User, I want a many to many model relationship so that campaign viewing and campaign assignment runs faster (ie, has a better big-O and does not lag).
+* *Given that a user is logged in, the campaigns they are tied to will be handled by a many-to-many db model including a junction table, making it more effective and structured*
 ## Model 
 
 The following class diagram was used to build the model:  ![Class Diagram](https://cdn.discordapp.com/attachments/1154504238156746863/1181769384243515454/CS1_Final_class_UML_9.png?ex=65824381&is=656fce81&hm=01a6c5f250edce599a7366d8dfc5b2dd9769075cc7fac0cce5b70e85c7edc3fa&)
