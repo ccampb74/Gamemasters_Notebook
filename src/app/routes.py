@@ -175,7 +175,7 @@ def is_in(a, b):
 
 @app.route('/campaigns', methods=['GET','POST'])
 def campaigns():
-
+    
     # checks to see if a user is currently logged in or not
     if current_user.is_authenticated:
         username= current_user.id
@@ -189,6 +189,7 @@ def campaigns():
 # individual campaign page
 @app.route('/campaign/<id>', methods=['GET', 'POST'])
 def campaign(id):
+    user = current_user
 
     campaign_search = Campaigns.query.filter_by(id=id).all()
 
@@ -203,13 +204,16 @@ def campaign(id):
     # creation of private notes start here
     private_note_form = NoteForm()
 
-    if current_user.id == campaign_game_master_id:
-        send_private_note = submit_note(campaign_id, private_note_form)
-        private_notes = PrivateNotes.query.filter_by(campaign_id=campaign_id).all()
-        
-        return render_template('campaign_display.html', user=current_user, send_private_note=send_private_note, private_notes=private_notes, private_note_form=private_note_form, campaign=campaign)
+    if user.is_authenticated:
+        if current_user.id == campaign_game_master_id:
+            send_private_note = submit_note(campaign_id, private_note_form)
+            private_notes = PrivateNotes.query.filter_by(campaign_id=campaign_id).all()
+            
+            return render_template('campaign_display.html', user=current_user, send_private_note=send_private_note, private_notes=private_notes, private_note_form=private_note_form, campaign=campaign, campaign_players=campaign_players)
+        else:
+            return render_template('campaign_display.html', user=current_user, campaign=campaign, campaign_players=campaign_players)
     else:
-        return render_template('campaign_display.html', user=current_user, campaign=campaign)
+        return render_template('campaign_display.html', user=current_user, campaign=campaign, campaign_players=campaign_players)
 
 
 def submit_note(campaign_id, private_note_form):
@@ -268,7 +272,7 @@ def character_creation(id,gm_id):
         db.session.add(new_character)
         db.session.commit()
 
-        return (redirect(url_for('campaign',id=id, gm_id=gm_id)))
+        return (redirect(url_for('all_characters',id=id, gm_id=gm_id)))
     else:
         return render_template('character_creation.html', user=current_user, form=form, id=id, gm_id=gm_id)
     
