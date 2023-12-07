@@ -1,9 +1,9 @@
-'''
+"""
 CS3250 - Software Development Methods and Tools - Fall 2023
 Instructor: Thyago Mota
 Student(s): Callie Campbell-Perdomo, Colin Morrison, Kareena Kunwar, Saul Gonzalez, Vincent Dufour
 Description: Project 03 - DnD Class Website - Team "Squirt"
-'''
+"""
 
 from flask_login import UserMixin
 from sqlalchemy import ForeignKey, Integer, String, LargeBinary, Text, DateTime
