@@ -32,7 +32,92 @@ The following class diagram was used to build the model:  ![Class Diagram](https
 
 # Development Process 
 
-This section should be used to describe how the scrum methodology was used in this project. As a suggestion, include the following table to summarize how the sprints occurred during the development of this project.
+SCRUM methodology was used for this project, with the team deciding to do two 1 and 1/2 week sprints. We used a Jira board to keep track of tasks and progress, which can be found here: 
+https://ccampb74msu.atlassian.net/jira/software/projects/CS3250/boards/3/
+
+The sprint details are as follows: 
+## Sprint 1 Planning
+
+Date/Time: 11/14/23 2:00 PM
+
+Participants: Callie Campbell-Perdomo, Colin Morrison, Kareena Kunwar, Saul Gonzalez, Vincent Dufour
+
+Goal Statement: Thought up an idea for the final project, and decided on a Dungeons and Dragons related program. Agreed to complete US#1 and US#2 before the end of the sprint. Created tasks for each team member to complete, and discussed the structure for completing tasks as a group. See Jira for details. 
+
+## Daily Scrums
+
+### 11/16/23 2:00 PM
+
+Participants: Callie Campbell-Perdomo, Saul Gonzalez, Vincent Dufour, Kareena Kunwar
+
+Notes:
+Brainstormed potential model structure and desired features, decided to change direction from a DnD Wiki-type website to a more story based, campaign-focused application. Previous user stories were scrapped, and a new model was discussed.
+
+### 11/20/23 5:00 PM
+
+Participants: Callie Campbell-Perdomo, Saul Gonzalez, Vincent Dufour
+
+Notes:
+Saul has created a new model for our project, using an updated SQL syntax. Vincent has created the github repository organization, and Callie has begun the routes and models for campaign creaton.
+
+## Sprint Review
+
+Date/Time: 11/26/23 9:00 PM    
+
+Participants: Callie Campbell-Perdomo, Saul Gonzalez, Vincent Dufour
+
+Notes:
+Sprint was successful, all functions of US#1 and US#2 are working and useable. Multiple users needs to be figured out for single campaigns still.
+
+## Sprint Retrospective
+
+Date/Time: 11/26/23 9:30 PM
+
+Participants: Callie Campbell-Perdomo, Saul Gonzalez, Vincent Dufour, Kareena Kunwar
+
+Notes: Fall break has been busy for the team, but we are still on schedule. We need to improve our communication on the days where we don't have daily scrums.
+
+
+## Sprint 2 Planning
+
+Date/Time: 11/27/23 5:00 PM
+
+Participants: Callie Campbell-Perdomo, Saul Gonzalez, Vincent Dufour
+
+Goal Statement: Sprint 2 is the final sprint, so US#3, 4, 5 and ideally 6 will need to be finished before Dec 7th. Tasks have been distributed among team members. User lists need to be figured out for campaign creation to be fully complete as well. 
+
+## Daily Scrums
+
+### 11/28/23 3:00 PM
+
+Participants: Callie Campbell-Perdomo, Saul Gonzalez, Vincent Dufour, Kareena Kunwar
+
+Notes:
+User CSV to list function unfortunately won't work, as .dbs cannot store lists as a variable. Shifting over to sorting through a string to detect users who are participating in a campaign. HTML is being prettified and bugs have been worked out (see graph below)
+
+### 12/6/23 8:00 PM
+
+Participants: Callie Campbell-Perdomo, Saul Gonzalez, Vincent Dufour
+
+Notes:
+HTML nearly done, and user association to campaigns is functional. Some logic issues have been fixed. Black and White box testing have been completed.
+
+## Sprint Review
+
+Date/Time: TBD   
+
+Participants: TBD
+
+Notes:
+TBD
+
+## Sprint Retrospective
+
+Date/Time: TBD
+
+Participants: TBD
+
+Notes: TBD
 
 |Sprint#|Goals|Start|End|Done|Observations|
 |---|---|---|---|---|---|
@@ -70,15 +155,15 @@ Next, create a virtual environment.
 
 Now you can build the docker image. 
 ```python
-docker build -t flask-app:test .
+docker build -t flask-app:my-app .
 ``` 
 
 Finally, you can run the image and view the application, and begin creating accounts, campaigns, sessions, and characters. 
 ```python
-docker run -p 127.0.0.1:5000:5000 (flask-app:test)
+docker run -p 127.0.0.1:5000:5000 flask-app:my-app
 ```
 
-If you wish to run the code tests, use the package manager [pip3](https://pip.pypa.io/en/stable/) to install the required packages from the requirements file, and ensure that your PYTHONPATH is set to app within 
+If you wish to run the code tests, use the package manager [pip3](https://pip.pypa.io/en/stable/) to install the required packages from the requirements file, and ensure that your PYTHONPATH is set to app within src
 
 ```python
 $ pip install -r requirements.txt
