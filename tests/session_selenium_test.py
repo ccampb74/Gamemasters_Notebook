@@ -9,7 +9,7 @@ import unittest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
-# pre-condition: a campaign with id="55" already exists and user "c" with password "c" exists 
+# pre-condition: user "c" with password "c" exists 
 class SigninTest(unittest.TestCase):
 
     def __init__(self, methodName: str = "runTest") -> None:
@@ -18,23 +18,29 @@ class SigninTest(unittest.TestCase):
         self.browser = webdriver.Chrome()
         self.browser.get('http://localhost:5000/')
 
-    #check to see if an unregistered user can create a campaign 
-    def test_unsucessful_campaign(self):
-        signin_button = self.browser.find_element(By.XPATH,'//button[text()="Sign In"]')
+    #check to see if a registered user can access the campaign creation page
+    def test_successful_campaign(self):
+        signin_button = self.browser.find_element(By.XPATH,'//button[@class="modern-button"][.="Sign In"]')
         signin_button.click()
         id = self.browser.find_element(By.ID, 'id')
         self.assertIsNotNone(id)
         id.send_keys('c')
-        password = self.browser.find_element(By.ID, 'password')
+        passwd = self.browser.find_element(By.ID, 'passwd')
         self.assertIsNotNone(passwd)
-        password.send_keys('c')
+        passwd.send_keys('c')
         submit = self.browser.find_element(By.ID, 'submit')
         submit.click()
+        new_campaign = self.browser.find_element(By.LINK_TEXT,"Create New Campaign")
+        new_campaign.click()
         page = self.browser.current_url
-        # new_campaign = self.browser.find_elements(By.TAG_NAME, 'button') [0]
-        # new_campaign.click()
-        self.assertEqual('http://localhost:5000/users', page)
-
+        self.assertEqual('http://localhost:5000/new_campaign', page)
+    
+    #check to see if an unregistered user can access the campaign creation page
+    def test_unsuccessful_campaign(self):
+        new_campaign = self.browser.find_element(By.LINK_TEXT,"Create New Campaign")
+        new_campaign.click()
+        message = self.browser.find_element(By.TAG_NAME, "h5")
+        self.assertTrue(message.text.startswith("Please log in before creating a campaign"))
 
 if __name__ == '__main__':
     unittest.main()
