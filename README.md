@@ -54,7 +54,8 @@ src/app/models.py                    43      0   100%
 src/app/routes.py                   189    148    22%
 tests/test_campaign_creation.py      13      0   100%
 -----------------------------------------------------
-TOTAL                               319    152    52%```
+TOTAL                               319    152    52%
+```
 
 
 # Deployment 
@@ -74,7 +75,7 @@ Finally, you can run the image and view the application, and begin creating acco
 ```docker run -p 127.0.0.1:5000:5000 (flask-app:test)
 ```
 
-If you wish to run the code tests, use the package manager [pip3](https://pip.pypa.io/en/stable/) to install the required packages from the requirements file, and ensure that your PYTHONPATH is set to app within src.
+If you wish to run the code tests, use the package manager [pip3](https://pip.pypa.io/en/stable/) to install the required packages from the requirements file, and ensure that your PYTHONPATH is set to app within 
 
 ```python
 $ pip install -r requirements.txt
