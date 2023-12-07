@@ -68,11 +68,13 @@ git clone https://github.com/vincentadufour/CS3250Project3DnDWiki.git
 Next, create a virtual environment.
 
 Now you can build the docker image. 
-```docker build -t flask-app:test .
+```python
+docker build -t flask-app:test .
 ``` 
 
 Finally, you can run the image and view the application, and begin creating accounts, campaigns, sessions, and characters. 
-```docker run -p 127.0.0.1:5000:5000 (flask-app:test)
+```python
+docker run -p 127.0.0.1:5000:5000 (flask-app:test)
 ```
 
 If you wish to run the code tests, use the package manager [pip3](https://pip.pypa.io/en/stable/) to install the required packages from the requirements file, and ensure that your PYTHONPATH is set to app within 
