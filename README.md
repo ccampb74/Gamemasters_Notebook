@@ -104,20 +104,20 @@ HTML nearly done, and user association to campaigns is functional. Some logic is
 
 ## Sprint Review
 
-Date/Time: TBD   
+Date/Time: 12/7/23 - 1:00 PM
 
-Participants: TBD
+Participants: Callie Campbell-Perdomo, Saul Gonzalez, Vincent Dufour, Kareena Kunwar
 
-Notes:
-TBD
+Notes: 
+Project is complete, README is the only thing that needs to be updated. Almost all functionalities were able to be implemented except for US #6 many to many relationship (optional user story).
 
 ## Sprint Retrospective
 
-Date/Time: TBD
+Date/Time: 12/7/23 - 1:15 PM
 
-Participants: TBD
+Participants: Callie Campbell-Perdomo, Saul Gonzalez, Vincent Dufour, Kareena Kunwar
 
-Notes: TBD
+Notes: Dividing of tasks was pretty even, although the model would be something that would be better to do as a group rather than as a task for a single person. In the future, we would like to have model creation be a team effort so that bugs and unnecessary model variables can be avoided earlier on. The second sprint was a bit more difficult to organize as half of it took place during fall break, and people had their own commitments so meetings were a little more difficult to put together. 
 
 |Sprint#|Goals|Start|End|Done|Observations|
 |---|---|---|---|---|---|
