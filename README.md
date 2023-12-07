@@ -1,3 +1,4 @@
+![The Game Masters' Notebook](https://cdn.discordapp.com/attachments/755285234139922496/1182137935085187183/b33d738d34d7f851b11aa08cd61f6e58.png?ex=65839abe&is=657125be&hm=ad03f5aeec484a68491227065862899aca414991f92c6ab001b79acbc545e826&)
 # Overview
 
 The main vision for this project was to create a website where tabletop roleplaying games' (TTRPG's) campaigns can be created and tracked along with their relevant information. Current TTRPG websites have some capability for story maintinence and accessibility, but that is not the focus of them. Players and Game Masters alike can access all of the campaigns that they're currently in or running, as well as track what happens each session and view all the characters they've encountered so far. Below is a use case diagram with all of the planned functions. 
