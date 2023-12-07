@@ -14,8 +14,8 @@ class SigninTest(unittest.TestCase):
 
     def __init__(self, methodName: str = "runTest") -> None:
         super().__init__(methodName)
-        # self.browser = webdriver.Edge()
         self.browser = webdriver.Chrome()
+        self.browser.maximize_window()
         self.browser.get('http://localhost:5000/')
 
     #check to see if a registered user can access the campaign creation page

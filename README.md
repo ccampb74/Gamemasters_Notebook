@@ -38,12 +38,45 @@ This section should be used to describe how the scrum methodology was used in th
 |1|US#1, US#2|11/14/23|11/26/23|US#1, US#2|CSV to list was found out to not work for player input during campaign creation, since lists are not a variable that can be stores in a FlaskSQL db. US#6 seeming unlikely as it would change many of the routes and models.|
 |2|US#3, US#4, US#5 |11/26/23|12/7/23|US#3, US#4, US#5| * Added character creation, editing, and viewing based on campaign. Found a bug where a user that isn't logged in would get an error when trying to access "all campaigns", replaced it with a "please log in first" kinda message. Made it such that only the DM can access character creation. Fixed bug where boolean alive/pc not working even if checked. Made it so that nonexistent users inputted as players would prevent a campaign from being created.|
 
-Feel free to use your own format for this section, as long as you are able to communicate what has been described here.
 
 # Testing 
 
-Share in this section the results of the tests performed to attest to the quality of the developed product, including the coverage of the tests in relation to the written code. There is no minimum code coverage expectation for your tests, other than expecting "some" coverage through at least one white-box and one black-box test.
+Aspects relating to the creation of campaigns were tested, as the campaigns were a major part of the application. For the black-box testing, campaign creation was tested with both registered and unregistered users, with unregistered users being prompted to sign in rather than being directed to the campaign creation form. The two tests ran in about 6 seconds, and both resulted in OK (no errors) Below is the terminal output once the tests are run.
+
+![Selenium tests](https://cdn.discordapp.com/attachments/1154504238156746863/1182126484345868328/image.png?ex=65839014&is=65711b14&hm=b41411e2830bd54b69fbbb63b6dcc358b661dbd8803b68a5ec58d0b77684af78&)
+
+For white-box testing, campaign object initialization was tested, to ensure that a campaign was indeed being created with the correct ID associated with it. A campaign with a random integer ID was created, and then compared to the originally input random integer. The ```coverage``` report for campaign object initialization can be found below. 
+```Name                              Stmts   Miss  Cover
+-----------------------------------------------------
+src/app/__init__.py                  23      4    83%
+src/app/forms.py                     51      0   100%
+src/app/models.py                    43      0   100%
+src/app/routes.py                   189    148    22%
+tests/test_campaign_creation.py      13      0   100%
+-----------------------------------------------------
+TOTAL                               319    152    52%```
+
 
 # Deployment 
 
-The final product must demonstrate the integrity of at least 5 of the 6 planned user stories. The final product must be packaged in the form of a docker image. In this section, describe the steps needed to generate that image so that others can deploy the product themselves. All files required for the deployment must be available, including the docker file, source/binary code, external package requirements, data files, images, etc. Instructions on how to create a container from the docker image with parameters such as port mapping, environment variables settings, etc., must be described (if needed). 
+First, clone the git repository. 
+```python 
+git clone https://github.com/vincentadufour/CS3250Project3DnDWiki.git
+```
+
+Next, create a virtual environment.
+
+Now you can build the docker image. 
+```docker build -t flask-app:test .
+``` 
+
+Finally, you can run the image and view the application, and begin creating accounts, campaigns, sessions, and characters. 
+```docker run -p 127.0.0.1:5000:5000 (flask-app:test)
+```
+
+If you wish to run the code tests, use the package manager [pip3](https://pip.pypa.io/en/stable/) to install the required packages from the requirements file, and ensure that your PYTHONPATH is set to app within src.
+
+```python
+$ pip install -r requirements.txt
+```
+
