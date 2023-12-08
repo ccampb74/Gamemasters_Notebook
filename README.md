@@ -14,6 +14,7 @@ The main vision for this project was to create a website where tabletop roleplay
 ### US#2 
 20 PTS - As a registered user, I want to view and create new campaigns as a Game Master for my group so that I can write out the campaign details and let my group see it too. 
 * *Given that a signed in user clicks the campaign button, they will be able to view their current campaigns or given the option to enter new campaign details, along with a list of their player members.*
+* The sequence diagram for US#2 is as follows: ![Sequence Diagram](https://cdn.discordapp.com/attachments/1154504238156746863/1182553231637872792/dPF1JiCm38RlUGhJ4plm0ZkWeUt21GaaX3WXj_LAM9gKsD7es-EqMpSqc2OkbPNuTxx_JxfWmIYfTOOtraCCJCPqkcGhsw4NU6QAXhnOwQ5ueHBkkixP2iK6NvWQ1KjaWjMkC2OBuERsj7aEIwqtK2mZeH0yq1QMs7Pe6rz0cKI2DoUgF6e_V0wFYQ8bXdM8KAKO5UmjPK9q0ha0JFAUSLLEjO59-mVI4qcAVfJQtFyhmE1f3YlBdSCUgXqrLDc9DcMULiLdlD_xBib1QNsM39j_7VhJTJzwdlIPDPjU7bR0CYHlFnFfteN6_T4bG2W_g98ilYG5T6xCRG_5XfoUTqo4JXEgUw0loyAGHryAbdJyjGyxADWYZt5JFJjBE4sW63MnbfYn8T0tN8zy0xCFyi-dCe9DGrne6jBe_UpSupcaLho616tYGQaoMDl8SbKCV6QXN_qPlm40.png?ex=65851d85&is=6572a885&hm=f0d91efebd074e7cdb26d4e94d8061ae25075e987aa91da84bd778cfd4b952b3&)
 ### US#3
 15 PTS - As a Game Master, I want to add new sessions to pre-existing campaigns so that me and my players can see recaps of what happened previously. 
 * *Given that a user who created a campaign views the campaign page, they can add in sessions that will then save in the order of most recent.*
